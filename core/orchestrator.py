@@ -19,7 +19,13 @@ class AgentRouter:
         "diagram": "DiagramDesignAgent",
         "security": "StrixPentestAgent",
         "frontend": "OpenDesignUIAgent",
-        "edge": "CactusNeedleAgent"
+        "edge": "CactusNeedleAgent",
+        "backend": "SupabaseBackendAgent",
+        "identity": "ClerkAuthAgent",
+        "devops": "GitHubActionsAgent",
+        "telemetry": "OpenTelemetryAgent",
+        "crypto": "LibsodiumCryptoAgent",
+        "web3": "WagmiWeb3Agent"
     }
 
     @classmethod
