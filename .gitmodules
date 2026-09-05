@@ -31,3 +31,51 @@
 [submodule "vendor/nnsight"]
 	path = vendor/nnsight
 	url = https://github.com/ndif-team/nnsight.git
+[submodule "vendor/vllm"]
+	path = vendor/vllm
+	url = https://github.com/vllm-project/vllm.git
+[submodule "vendor/supabase-cli"]
+	path = vendor/supabase-cli
+	url = https://github.com/supabase/cli.git
+[submodule "vendor/wagmi"]
+	path = vendor/wagmi
+	url = https://github.com/wevm/wagmi.git
+[submodule "vendor/foundry"]
+	path = vendor/foundry
+	url = https://github.com/foundry-rs/foundry.git
+[submodule "vendor/sentry-javascript"]
+	path = vendor/sentry-javascript
+	url = https://github.com/getsentry/sentry-javascript.git
+[submodule "vendor/libsodium"]
+	path = vendor/libsodium
+	url = https://github.com/jedisct1/libsodium.git
+[submodule "vendor/ppt-master"]
+	path = vendor/ppt-master
+	url = https://github.com/hugohe3/ppt-master.git
+[submodule "vendor/free-for-dev"]
+	path = vendor/free-for-dev
+	url = https://github.com/ripienaar/free-for-dev.git
+[submodule "vendor/public-apis"]
+	path = vendor/public-apis
+	url = https://github.com/public-apis/public-apis.git
+[submodule "vendor/hono"]
+	path = vendor/hono
+	url = https://github.com/honojs/hono.git
+[submodule "vendor/clerk-javascript"]
+	path = vendor/clerk-javascript
+	url = https://github.com/clerk/javascript.git
+[submodule "vendor/SimFoundry"]
+	path = vendor/SimFoundry
+	url = https://github.com/NVlabs/SimFoundry.git
+[submodule "vendor/camoufox"]
+	path = vendor/camoufox
+	url = https://github.com/daijro/camoufox.git
+[submodule "vendor/Agentic-Design-Patterns"]
+	path = vendor/Agentic-Design-Patterns
+	url = https://github.com/evoiz/Agentic-Design-Patterns.git
+[submodule "vendor/threeui"]
+	path = vendor/threeui
+	url = https://github.com/MengTo/threeui.git
+[submodule "vendor/boneyard"]
+	path = vendor/boneyard
+	url = https://github.com/0xGF/boneyard.git

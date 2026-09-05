@@ -173,6 +173,82 @@ VENDOR_CATALOG = {
         "install": "npm install -g cline",
         "run":   "cline",
     },
+
+    # ── Edge / On-Device Inference ─────────────────────────────────────────
+    "llama.cpp": {
+        "repo":  "https://github.com/ggml-org/llama.cpp",
+        "path":  VENDOR_DIR / "llama.cpp",
+        "docs":  "https://github.com/ggml-org/llama.cpp#readme",
+        "install": "cmake -B build && cmake --build build --config Release",
+        "run":   "./build/bin/llama-cli",
+    },
+    "llm.c": {
+        "repo":  "https://github.com/karpathy/llm.c",
+        "path":  VENDOR_DIR / "llm.c",
+        "docs":  "https://github.com/karpathy/llm.c#readme",
+        "install": "make",
+        "run":   "./train_gpt2",
+    },
+    "mlc-llm": {
+        "repo":  "https://github.com/mlc-ai/mlc-llm",
+        "path":  VENDOR_DIR / "mlc-llm",
+        "docs":  "https://llm.mlc.ai/docs",
+        "install": "pip install mlc-llm",
+        "run":   "mlc_llm chat",
+    },
+
+    # ── Social Media Scrapers ──────────────────────────────────────────────
+    "scrapegraph-ai": {
+        "repo":  "https://github.com/ScrapeGraphAI/Scrapegraph-ai",
+        "path":  VENDOR_DIR / "scrapegraph-ai",
+        "docs":  "https://scrapegraph-ai.readthedocs.io",
+        "install": "pip install scrapegraphai",
+        "run":   "python -m scrapegraphai",
+    },
+    "agent-twitter-client": {
+        "repo":  "https://github.com/the-convocation/twitter-scraper",
+        "path":  VENDOR_DIR / "agent-twitter-client",
+        "docs":  "https://github.com/the-convocation/twitter-scraper#readme",
+        "install": "npm install agent-twitter-client",
+        "run":   None,  # Library
+    },
+    "social-media-agent": {
+        "repo":  "https://github.com/langchain-ai/social-media-agent",
+        "path":  VENDOR_DIR / "social-media-agent",
+        "docs":  "https://github.com/langchain-ai/social-media-agent#readme",
+        "install": "pip install -r requirements.txt",
+        "run":   "python -m social_media_agent",
+    },
+
+    # ── Hardware / CAD / Robotics ──────────────────────────────────────────
+    "awesome-cad": {
+        "repo":  "https://github.com/mlightcad/awesome-cad",
+        "path":  VENDOR_DIR / "awesome-cad",
+        "docs":  "https://github.com/mlightcad/awesome-cad#readme",
+        "install": None,  # Reference list
+        "run":   None,
+    },
+    "awesome-robotics": {
+        "repo":  "https://github.com/mjyc/awesome-robotics-projects",
+        "path":  VENDOR_DIR / "awesome-robotics",
+        "docs":  "https://github.com/mjyc/awesome-robotics-projects#readme",
+        "install": None,  # Reference list
+        "run":   None,
+    },
+    "mujoco": {
+        "repo":  "https://github.com/google-deepmind/mujoco",
+        "path":  VENDOR_DIR / "mujoco",
+        "docs":  "https://mujoco.readthedocs.io",
+        "install": "pip install mujoco",
+        "run":   "python -m mujoco.viewer",
+    },
+    "kicad-footprints": {
+        "repo":  "https://github.com/KiCad/kicad-footprints",
+        "path":  VENDOR_DIR / "kicad-footprints",
+        "docs":  "https://gitlab.com/kicad/libraries/kicad-footprints",
+        "install": None,  # KiCad library files
+        "run":   None,
+    },
 }
 
 
