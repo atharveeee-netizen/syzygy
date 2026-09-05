@@ -1,11 +1,10 @@
 """
 GitHubActionsAgent
-Domain: CI/CD & DevOps Workflow
-Stack: GitHub Actions + Docker + Cloudflare Pages
+Domain: CI/CD & DevOps Workflow Scaffolding
+Stack: GitHub Actions + Docker
 """
 import logging
 import os
-import subprocess
 
 logger = logging.getLogger("SYZYGY.GitHubActionsAgent")
 
@@ -15,25 +14,60 @@ class GitHubActionsAgent:
 
     def run(self, task):
         project_dir = task.get("project_dir", ".")
-        logger.info(f"Executing devops scaffolding in {project_dir}")
+        language = task.get("language", "node").lower()
+        logger.info(f"Executing devops scaffolding for {language} in {project_dir}")
         
         # Create GitHub Actions workflow directory
         workflows_dir = os.path.join(project_dir, ".github", "workflows")
         os.makedirs(workflows_dir, exist_ok=True)
         
-        # Scaffold a basic CI/CD workflow
+        # Scaffold a basic CI/CD workflow based on language
         ci_yml_path = os.path.join(workflows_dir, "ci.yml")
-        ci_yml_content = """name: SYZYGY CI/CD
+        
+        if language == "python":
+            ci_yml_content = """name: SYZYGY CI/CD Python
 on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '18'
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
+      - name: Run tests
+        run: pytest || echo 'No tests specified'
+"""
+        elif language == "rust":
+             ci_yml_content = """name: SYZYGY CI/CD Rust
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: cargo build --verbose
+      - name: Run tests
+        run: cargo test --verbose
+"""
+        else: # Default node
+            ci_yml_content = """name: SYZYGY CI/CD Node.js
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
       - name: Install dependencies
         run: npm ci || npm install
       - name: Run linter & tests
@@ -42,6 +76,6 @@ jobs:
         with open(ci_yml_path, "w") as f:
             f.write(ci_yml_content)
             
-        logger.info(f"Generated GitHub Actions workflow at {ci_yml_path}")
+        logger.info(f"Generated GitHub Actions {language} workflow at {ci_yml_path}")
         
         return {"status": "SUCCESS", "module": "devops", "files": [ci_yml_path]}

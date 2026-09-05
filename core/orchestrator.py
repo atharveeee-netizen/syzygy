@@ -10,6 +10,7 @@ import os
 import json
 import logging
 import importlib
+import subprocess
 from pathlib import Path
 from typing import Dict, Any, Optional
 
@@ -26,6 +27,22 @@ VENDOR_DIR = Path(__file__).resolve().parent.parent / "vendor"
 # Run `python syzygy.py setup` first to clone all submodules.
 # ============================================================
 VENDOR_CATALOG = {
+    # ── Orchestrators ──────────────────────────────────────────────────────
+    "langgraph": {
+        "repo":  "https://github.com/langchain-ai/langgraph",
+        "path":  VENDOR_DIR / "langgraph",
+        "docs":  "https://github.com/langchain-ai/langgraph#readme",
+        "install": "pip install langgraph",
+        "run":   None,
+    },
+    "crewai": {
+        "repo":  "https://github.com/crewAIInc/crewAI",
+        "path":  VENDOR_DIR / "crewAI",
+        "docs":  "https://github.com/crewAIInc/crewAI#readme",
+        "install": "pip install crewai",
+        "run":   "crewai",
+    },
+    # ── Agents & Memory ────────────────────────────────────────────────────
     "browser-use": {
         "repo":  "https://github.com/browser-use/browser-use",
         "path":  VENDOR_DIR / "browser-use",
@@ -33,40 +50,12 @@ VENDOR_CATALOG = {
         "install": "pip install browser-use",
         "run":   "python -m browser_use",
     },
-    "deepseek-harness": {
-        "repo":  "https://github.com/deepseek-ai/deepseek-harness",
-        "path":  VENDOR_DIR / "deepseek-harness",
-        "docs":  "https://github.com/deepseek-ai/deepseek-harness#readme",
-        "install": "npm install",
-        "run":   "npm start",
-    },
-    "unsloth": {
-        "repo":  "https://github.com/unslothai/unsloth",
-        "path":  VENDOR_DIR / "unsloth",
-        "docs":  "https://github.com/unslothai/unsloth#readme",
-        "install": "pip install unsloth",
-        "run":   "python -m unsloth",
-    },
-    "axolotl": {
-        "repo":  "https://github.com/axolotl-ai-cloud/axolotl",
-        "path":  VENDOR_DIR / "axolotl",
-        "docs":  "https://axolotl-ai-cloud.github.io/axolotl/",
-        "install": "pip install axolotl",
-        "run":   "accelerate launch -m axolotl.cli.train",
-    },
-    "vllm": {
-        "repo":  "https://github.com/vllm-project/vllm",
-        "path":  VENDOR_DIR / "vllm",
-        "docs":  "https://docs.vllm.ai",
-        "install": "pip install vllm",
-        "run":   "python -m vllm.entrypoints.openai.api_server",
-    },
-    "firecrawl": {
-        "repo":  "https://github.com/mendableai/firecrawl",
-        "path":  VENDOR_DIR / "firecrawl",
-        "docs":  "https://docs.firecrawl.dev",
-        "install": "pip install firecrawl-py",
-        "run":   "firecrawl",
+    "mem0ai": {
+        "repo":  "https://github.com/mem0ai/mem0",
+        "path":  VENDOR_DIR / "mem0",
+        "docs":  "https://docs.mem0.ai",
+        "install": "pip install mem0ai",
+        "run":   None,
     },
     "letta": {
         "repo":  "https://github.com/letta-ai/letta",
@@ -75,6 +64,65 @@ VENDOR_CATALOG = {
         "install": "pip install letta",
         "run":   "letta server",
     },
+    # ── AI Model Training & Inference ──────────────────────────────────────
+    "deepseek-harness": {
+        "repo":  "https://github.com/deepseek-ai/deepseek-harness",
+        "path":  VENDOR_DIR / "deepseek-harness",
+        "docs":  "https://github.com/deepseek-ai/deepseek-harness#readme",
+        "install": "npm install",
+        "run":   "npm start",
+    },
+    "lightning-hydra-template": {
+        "repo":  "https://github.com/ashleve/lightning-hydra-template",
+        "path":  VENDOR_DIR / "lightning-hydra-template",
+        "docs":  "https://github.com/ashleve/lightning-hydra-template#readme",
+        "install": "pip install -r requirements.txt",
+        "run":   "python src/train.py",
+    },
+    "unsloth": {
+        "repo":  "https://github.com/unslothai/unsloth",
+        "path":  VENDOR_DIR / "unsloth",
+        "docs":  "https://github.com/unslothai/unsloth#readme",
+        "install": "pip install unsloth",
+        "run":   "python -m unsloth",
+    },
+    "vllm": {
+        "repo":  "https://github.com/vllm-project/vllm",
+        "path":  VENDOR_DIR / "vllm",
+        "docs":  "https://docs.vllm.ai",
+        "install": "pip install vllm",
+        "run":   "python -m vllm.entrypoints.openai.api_server",
+    },
+    "litellm": {
+        "repo":  "https://github.com/BerriAI/litellm",
+        "path":  VENDOR_DIR / "litellm",
+        "docs":  "https://docs.litellm.ai",
+        "install": "pip install litellm[proxy]",
+        "run":   "litellm",
+    },
+    # ── Research & Scraping ────────────────────────────────────────────────
+    "firecrawl": {
+        "repo":  "https://github.com/mendableai/firecrawl",
+        "path":  VENDOR_DIR / "firecrawl",
+        "docs":  "https://docs.firecrawl.dev",
+        "install": "pip install firecrawl-py",
+        "run":   "firecrawl",
+    },
+    "scrapegraph-ai": {
+        "repo":  "https://github.com/ScrapeGraphAI/Scrapegraph-ai",
+        "path":  VENDOR_DIR / "scrapegraph-ai",
+        "docs":  "https://scrapegraph-ai.readthedocs.io",
+        "install": "pip install scrapegraphai",
+        "run":   "python -m scrapegraphai",
+    },
+    "paper-search-mcp": {
+        "repo":  "https://github.com/openags/paper-search-mcp",
+        "path":  VENDOR_DIR / "paper-search-mcp",
+        "docs":  "https://github.com/openags/paper-search-mcp#readme",
+        "install": "pip install -e .",
+        "run":   None,
+    },
+    # ── Security & Quality ─────────────────────────────────────────────────
     "strix": {
         "repo":  "https://github.com/usestrix/strix",
         "path":  VENDOR_DIR / "strix",
@@ -82,68 +130,35 @@ VENDOR_CATALOG = {
         "install": "pip install strix",
         "run":   "strix scan",
     },
-    "motion": {
-        "repo":  "https://github.com/motiondivision/motion",
-        "path":  VENDOR_DIR / "motion",
-        "docs":  "https://motion.dev/docs",
-        "install": "npm install motion",
-        "run":   None,  # Library, not a CLI tool
+    "anti-ai-slop-writing": {
+        "repo":  "https://github.com/jalaalrd/anti-ai-slop-writing",
+        "path":  VENDOR_DIR / "anti-ai-slop-writing",
+        "docs":  "https://github.com/jalaalrd/anti-ai-slop-writing#readme",
+        "install": None,
+        "run":   None,
     },
-    "nnsight": {
-        "repo":  "https://github.com/ndif-team/nnsight",
-        "path":  VENDOR_DIR / "nnsight",
-        "docs":  "https://nnsight.net/documentation",
-        "install": "pip install nnsight",
-        "run":   "python -m nnsight",
+    # ── Infrastructure & DevOps ────────────────────────────────────────────
+    "act": {
+        "repo":  "https://github.com/nektos/act",
+        "path":  VENDOR_DIR / "act",
+        "docs":  "https://nektosact.com",
+        "install": "brew install act", # Depends on OS, winget for windows
+        "run":   "act",
     },
+    "diagrams": {
+        "repo":  "https://github.com/mingrammer/diagrams",
+        "path":  VENDOR_DIR / "diagrams",
+        "docs":  "https://diagrams.mingrammer.com",
+        "install": "pip install diagrams",
+        "run":   None,
+    },
+    # ── Web, Mobile & General ──────────────────────────────────────────────
     "supabase-cli": {
         "repo":  "https://github.com/supabase/cli",
         "path":  VENDOR_DIR / "supabase-cli",
         "docs":  "https://supabase.com/docs/reference/cli",
         "install": "npm install supabase --save-dev",
         "run":   "supabase start",
-    },
-    "wagmi": {
-        "repo":  "https://github.com/wevm/wagmi",
-        "path":  VENDOR_DIR / "wagmi",
-        "docs":  "https://wagmi.sh",
-        "install": "npm install wagmi viem",
-        "run":   None,  # Library
-    },
-    "foundry": {
-        "repo":  "https://github.com/foundry-rs/foundry",
-        "path":  VENDOR_DIR / "foundry",
-        "docs":  "https://book.getfoundry.sh",
-        "install": "curl -L https://foundry.paradigm.xyz | bash",
-        "run":   "forge test",
-    },
-    "sentry-javascript": {
-        "repo":  "https://github.com/getsentry/sentry-javascript",
-        "path":  VENDOR_DIR / "sentry-javascript",
-        "docs":  "https://docs.sentry.io/platforms/javascript/",
-        "install": "npm install @sentry/node",
-        "run":   None,  # Library
-    },
-    "libsodium": {
-        "repo":  "https://github.com/jedisct1/libsodium",
-        "path":  VENDOR_DIR / "libsodium",
-        "docs":  "https://doc.libsodium.org",
-        "install": "pip install pynacl",
-        "run":   None,  # Library
-    },
-    "hono": {
-        "repo":  "https://github.com/honojs/hono",
-        "path":  VENDOR_DIR / "hono",
-        "docs":  "https://hono.dev/docs",
-        "install": "npm install hono",
-        "run":   None,  # Library
-    },
-    "clerk-javascript": {
-        "repo":  "https://github.com/clerk/javascript",
-        "path":  VENDOR_DIR / "clerk-javascript",
-        "docs":  "https://clerk.com/docs",
-        "install": "npm install @clerk/nextjs",
-        "run":   None,  # Library
     },
     "ppt-master": {
         "repo":  "https://github.com/hugohe3/ppt-master",
@@ -152,30 +167,8 @@ VENDOR_CATALOG = {
         "install": "pip install ppt-master",
         "run":   "python -m ppt_master",
     },
-    "free-for-dev": {
-        "repo":  "https://github.com/ripienaar/free-for-dev",
-        "path":  VENDOR_DIR / "free-for-dev",
-        "docs":  "https://free-for.dev",
-        "install": None,  # Reference list only
-        "run":   None,
-    },
-    "public-apis": {
-        "repo":  "https://github.com/public-apis/public-apis",
-        "path":  VENDOR_DIR / "public-apis",
-        "docs":  "https://github.com/public-apis/public-apis#readme",
-        "install": None,  # Reference list only
-        "run":   None,
-    },
-    "cline": {
-        "repo":  "https://github.com/cline/cline",
-        "path":  VENDOR_DIR / "cline",
-        "docs":  "https://github.com/cline/cline#readme",
-        "install": "npm install -g cline",
-        "run":   "cline",
-    },
-
+    
     # ── Edge / On-Device Inference ─────────────────────────────────────────
-    # WINNER: llama.cpp — 68k stars, runs any GGUF model on pure CPU, zero GPU needed
     "llama.cpp": {
         "repo":  "https://github.com/ggml-org/llama.cpp",
         "path":  VENDOR_DIR / "llama.cpp",
@@ -183,47 +176,15 @@ VENDOR_CATALOG = {
         "install": "cmake -B build && cmake --build build --config Release",
         "run":   "./build/bin/llama-cli",
     },
-    "llm.c": {
-        "repo":  "https://github.com/karpathy/llm.c",
-        "path":  VENDOR_DIR / "llm.c",
-        "docs":  "https://github.com/karpathy/llm.c#readme",
-        "install": "make",
-        "run":   "./train_gpt2",
-    },
-    "mlc-llm": {
-        "repo":  "https://github.com/mlc-ai/mlc-llm",
-        "path":  VENDOR_DIR / "mlc-llm",
-        "docs":  "https://llm.mlc.ai/docs",
-        "install": "pip install mlc-llm",
-        "run":   "mlc_llm chat",
-    },
-
-    # ── Social Media / Web Scraper ─────────────────────────────────────────
-    # WINNER: scrapegraph-ai — LLM-powered, scrapes ANY site with plain English prompt
-    "scrapegraph-ai": {
-        "repo":  "https://github.com/ScrapeGraphAI/Scrapegraph-ai",
-        "path":  VENDOR_DIR / "scrapegraph-ai",
-        "docs":  "https://scrapegraph-ai.readthedocs.io",
-        "install": "pip install scrapegraphai",
-        "run":   "python -m scrapegraphai",
-    },
-    "agent-twitter-client": {
-        "repo":  "https://github.com/the-convocation/twitter-scraper",
-        "path":  VENDOR_DIR / "agent-twitter-client",
-        "docs":  "https://github.com/the-convocation/twitter-scraper#readme",
-        "install": "npm install agent-twitter-client",
-        "run":   None,  # Library
-    },
-    "social-media-agent": {
-        "repo":  "https://github.com/langchain-ai/social-media-agent",
-        "path":  VENDOR_DIR / "social-media-agent",
-        "docs":  "https://github.com/langchain-ai/social-media-agent#readme",
-        "install": "pip install -r requirements.txt",
-        "run":   "python -m social_media_agent",
+    "whichllm": {
+        "repo":  "https://github.com/Andyyyy64/whichllm",
+        "path":  VENDOR_DIR / "whichllm",
+        "docs":  "https://github.com/Andyyyy64/whichllm#readme",
+        "install": "pip install whichllm",
+        "run":   "python -m whichllm",
     },
 
     # ── Hardware / CAD / Robotics ──────────────────────────────────────────
-    # WINNER (CAD index): awesome-cad — single reference for all open CAD tools & files
     "awesome-cad": {
         "repo":  "https://github.com/mlightcad/awesome-cad",
         "path":  VENDOR_DIR / "awesome-cad",
@@ -231,28 +192,12 @@ VENDOR_CATALOG = {
         "install": None,
         "run":   None,
     },
-    "awesome-robotics": {
-        "repo":  "https://github.com/mjyc/awesome-robotics-projects",
-        "path":  VENDOR_DIR / "awesome-robotics",
-        "docs":  "https://github.com/mjyc/awesome-robotics-projects#readme",
-        "install": None,
-        "run":   None,
-    },
-    # WINNER (physics sim): mujoco — Google DeepMind, most accurate contact-rich simulation
     "mujoco": {
         "repo":  "https://github.com/google-deepmind/mujoco",
         "path":  VENDOR_DIR / "mujoco",
         "docs":  "https://mujoco.readthedocs.io",
         "install": "pip install mujoco",
         "run":   "python -m mujoco.viewer",
-    },
-    # WINNER (PCB): kicad-footprints — official KiCad component footprint library
-    "kicad-footprints": {
-        "repo":  "https://github.com/KiCad/kicad-footprints",
-        "path":  VENDOR_DIR / "kicad-footprints",
-        "docs":  "https://gitlab.com/kicad/libraries/kicad-footprints",
-        "install": None,  # KiCad library files
-        "run":   None,
     },
 }
 
@@ -263,21 +208,23 @@ class AgentRouter:
     """
 
     ROUTES = {
+        "orchestrate":  "langgraph",
         "scrape":       "browser-use",
-        "orchestrate":  "deepseek-harness",
-        "train":        "unsloth",
-        "finetune":     "axolotl",
+        "scrape_social":"scrapegraph-ai",
+        "train":        "lightning-hydra-template",
         "serve":        "vllm",
-        "research":     "firecrawl",
-        "memory":       "letta",
+        "edge":         "llama.cpp",
+        "route":        "litellm",
+        "research":     "paper-search-mcp",
+        "memory":       "mem0ai",
         "security":     "strix",
         "pentest":      "strix",
-        "web3":         "wagmi",
-        "contract":     "foundry",
-        "interpret":    "nnsight",
+        "diagram":      "diagrams",
+        "ci":           "act",
         "db":           "supabase-cli",
-        "auth":         "clerk-javascript",
         "deck":         "ppt-master",
+        "cad":          "awesome-cad",
+        "robotics":     "mujoco",
     }
 
     @classmethod
@@ -371,7 +318,7 @@ class PhysicalAgentEngine:
         logger.info(f"Launching official DeepSeek Harness → {info['docs']}")
         logger.info(f"Source: {info['repo']}")
         # Run official entry point: npm install (first time) then npm start
-        os.system(f'cd "{path}" && npm install --silent && npm start -- --port {port}')
+        subprocess.run(f'npm install --silent ; npm start -- --port {port}', shell=True, cwd=str(path))
 
     @staticmethod
     def launch_browser_use(task_description: str):
@@ -388,8 +335,9 @@ class PhysicalAgentEngine:
         logger.info(f"Task: {task_description}")
 
         # Install from the cloned submodule, then run via module
-        os.system(f'pip install -e "{path}" --quiet')
-        os.system(f'python -c "import asyncio; from browser_use import Agent; from langchain_openai import ChatOpenAI; asyncio.run(Agent(task=\'{task_description}\', llm=ChatOpenAI(model=\'gpt-4o\')).run())"')
+        subprocess.run(f'pip install -e "{path}" --quiet', shell=True)
+        code = f"import asyncio; from browser_use import Agent; from langchain_openai import ChatOpenAI; asyncio.run(Agent(task='{task_description}', llm=ChatOpenAI(model='gpt-4o')).run())"
+        subprocess.run(["python", "-c", code])
 
     @staticmethod
     def launch_letta():
@@ -399,17 +347,7 @@ class PhysicalAgentEngine:
             return
         info = VENDOR_CATALOG["letta"]
         logger.info(f"Launching official Letta server → {info['docs']}")
-        os.system(f'pip install -e "{path}" --quiet && letta server')
-
-    @staticmethod
-    def launch_unsloth_train(config_path: str):
-        """Run training via official Unsloth from vendor/unsloth."""
-        path = PhysicalAgentEngine._check_vendor("unsloth")
-        if not path:
-            return
-        info = VENDOR_CATALOG["unsloth"]
-        logger.info(f"Launching official Unsloth → {info['docs']}")
-        os.system(f'pip install -e "{path}" --quiet && python "{config_path}"')
+        subprocess.run(f'pip install -e "{path}" --quiet ; letta server', shell=True)
 
     @staticmethod
     def launch_strix(target: str):
@@ -419,7 +357,7 @@ class PhysicalAgentEngine:
             return
         info = VENDOR_CATALOG["strix"]
         logger.info(f"Launching official Strix scan on {target} → {info['docs']}")
-        os.system(f'pip install -e "{path}" --quiet && strix scan --target {target}')
+        subprocess.run(f'pip install -e "{path}" --quiet ; strix scan --target {target}', shell=True)
 
 
 if __name__ == "__main__":

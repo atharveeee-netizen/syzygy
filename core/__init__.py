@@ -12,6 +12,10 @@ from .aiml import AIMLEngineAgent
 from .recon import ReconEngineAgent
 from .architect import AIArchitectAgent
 from .ideation import HackathonStrategistAgent
+from .crypto import ScaffoldCryptoAgent
+from .identity import ScaffoldAuthAgent
+from .telemetry import ScaffoldTelemetryAgent
+from .devops import GitHubActionsAgent
 
 __all__ = [
     "OrchestratorEngine",
@@ -24,6 +28,9 @@ __all__ = [
     "AIMLEngineAgent",
     "ReconEngineAgent",
     "AIArchitectAgent",
-    "HackathonStrategistAgent"
+    "HackathonStrategistAgent",
+    "ScaffoldCryptoAgent",
+    "ScaffoldAuthAgent",
+    "ScaffoldTelemetryAgent",
+    "GitHubActionsAgent"
 ]
-

@@ -11,3 +11,4 @@ build/
 *.log
 *.pptx
 !templates/**/*.pptx
+*.db

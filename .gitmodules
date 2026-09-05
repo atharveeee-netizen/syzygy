@@ -106,3 +106,6 @@
 [submodule "vendor/awesome-robotics"]
 	path = vendor/awesome-robotics
 	url = https://github.com/mjyc/awesome-robotics-projects.git
+[submodule "vendor/kicad-footprints"]
+	path = vendor/kicad-footprints
+	url = https://github.com/KiCad/kicad-footprints.git
