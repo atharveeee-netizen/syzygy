@@ -19,3 +19,15 @@
 [submodule "vendor/deepseek-harness"]
 	path = vendor/deepseek-harness
 	url = https://github.com/deepseek-ai/deepseek-harness.git
+[submodule "vendor/firecrawl"]
+	path = vendor/firecrawl
+	url = https://github.com/mendableai/firecrawl.git
+[submodule "vendor/unsloth"]
+	path = vendor/unsloth
+	url = https://github.com/unslothai/unsloth.git
+[submodule "vendor/axolotl"]
+	path = vendor/axolotl
+	url = https://github.com/axolotl-ai-cloud/axolotl.git
+[submodule "vendor/nnsight"]
+	path = vendor/nnsight
+	url = https://github.com/ndif-team/nnsight.git

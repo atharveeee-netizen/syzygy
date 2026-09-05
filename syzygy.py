@@ -309,7 +309,10 @@ def main():
     orch_parser.add_argument("--port", type=int, default=3080, help="Port to run the orchestrator UI on")
 
     # setup command (Git Submodules)
-    setup_parser = subparsers.add_parser("setup", help="Dynamically download all 22 Agent & Engine Submodules")
+    setup_parser = subparsers.add_parser("setup", help="Dynamically download all 22 Agent & Engine Submodules via git submodule")
+
+    # vendors command (live status table)
+    vendors_parser = subparsers.add_parser("vendors", help="List all 22 Champion Matrix repos and their clone status")
 
     args = parser.parse_args()
 
@@ -381,9 +384,28 @@ def main():
         from core.orchestrator import PhysicalAgentEngine
         PhysicalAgentEngine.launch_deepseek(port=args.port)
     elif args.command == "setup":
-        logger.info("Initializing and fetching Syzygy Submodules from GitHub...")
-        os.system("git submodule update --init --recursive")
-        logger.info("Setup complete. All repositories successfully linked and downloaded.")
+        logger.info("Initializing and fetching all Champion Matrix Submodules from official GitHub repos...")
+        ret = os.system("git submodule update --init --recursive")
+        if ret == 0:
+            logger.info("Setup complete. All official repositories cloned into vendor/.")
+        else:
+            logger.error("git submodule update failed. Check your internet connection and try again.")
+    elif args.command == "vendors":
+        import io
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+        from core.orchestrator import OrchestratorEngine
+        engine = OrchestratorEngine()
+        vendors = engine.list_vendors()
+        print(f"\n{'Tool':<25} {'Cloned':>8}  Official GitHub Repo")
+        print("-" * 85)
+        for name, info in vendors.items():
+            status = "[YES]" if info["cloned"] else "[ NO]"
+            print(f"{name:<25} {status:>8}  {info['repo']}")
+        not_cloned = [n for n, i in vendors.items() if not i["cloned"]]
+        if not_cloned:
+            print(f"\n[!] {len(not_cloned)} repos not yet cloned. Run: python syzygy.py setup")
+        else:
+            print("\n[OK] All vendor repositories are cloned and ready.")
     else:
         parser.print_help()
 
