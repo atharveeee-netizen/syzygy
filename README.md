@@ -11,7 +11,9 @@
 
 ## 🏛️ What is SYZYGY?
 
-In celestial mechanics, a **syzygy** (/ˈsɪzədʒi/) is the straight-line configuration of three or more celestial bodies in a gravitational system.
+**SYZYGY** is a curated list of vibecoded tools, agents, and frameworks used by **atharveeee** to build production-grade projects at lightspeed. We are making something that we will use for all future projects to eliminate boilerplate and AI slop.
+
+In celestial mechanics, a **syzygy** (/ˈsɪzədʒi/) is the straight-line configuration of three or more celestial bodies.
 
 In software engineering, **SYZYGY** represents the immutable alignment between:
 1. **Natural Language Goals:** Ambiguous human requirements converted into deterministic architectures.
@@ -59,6 +61,12 @@ project-root/
 | **13** | **Consumer GPU Fine-Tuning** | **Soup** | `MakazhanAlpamys/Soup` | Enables fine-tuning 8B parameter models on a modest 4GB VRAM GPU via layer-streaming architecture. |
 | **14** | **Mechanistic Interpretability** | **NNsight** | `ndif-team/nnsight` | Standardized API for surgical tracing and manipulation of internal model activations and attention heads. |
 | **15** | **Free Cloud Infrastructure & APIs** | **Free-for-Dev + Public-APIs** | `free-for-dev` + `public-apis` | Complete registry of zero-cost hosting, databases, auth, and free public data endpoints. |
+| **16** | **Backend Architecture & Database** | **Supabase + Hono** | `supabase/cli` | Handles Postgres database, Row Level Security (RLS), realtime subscriptions, and Edge Functions. |
+| **17** | **Authentication & Identity** | **Clerk + RBAC / Auth.js** | `clerk/javascript` | Complete drop-in identity management, 2FA, passwordless, session management, and JWT validation. |
+| **18** | **CI/CD & DevOps Workflow** | **GitHub Actions + Docker** | `actions/runner` | Automates linting, type-checking, building, testing, and edge deployment for zero-downtime releases. |
+| **19** | **Observability & Telemetry** | **OpenTelemetry + Sentry** | `getsentry/sentry` | Traces user journeys, tracks full-stack errors, and records session replays to close the observability gap. |
+| **20** | **Cryptography & Data Privacy** | **Libsodium (TweetNaCl.js)** | `jedisct1/libsodium` | Provides secure key exchange, symmetric/asymmetric encryption, and secure password hashing (Argon2). |
+| **21** | **Web3 & Blockchain** | **Wagmi + Foundry** | `wevm/wagmi` | Best-in-class EVM interaction, robust wallet connection UI, and blazing-fast Rust-based smart contract testing. |
 
 ---
 
