@@ -308,6 +308,9 @@ def main():
     orch_parser = subparsers.add_parser("orchestrate", help="Boot up the physical DeepSeek Harness web daemon")
     orch_parser.add_argument("--port", type=int, default=3080, help="Port to run the orchestrator UI on")
 
+    # setup command (Git Submodules)
+    setup_parser = subparsers.add_parser("setup", help="Dynamically download all 22 Agent & Engine Submodules")
+
     args = parser.parse_args()
 
     if args.command == "init":
@@ -377,6 +380,10 @@ def main():
     elif args.command == "orchestrate":
         from core.orchestrator import PhysicalAgentEngine
         PhysicalAgentEngine.launch_deepseek(port=args.port)
+    elif args.command == "setup":
+        logger.info("Initializing and fetching Syzygy Submodules from GitHub...")
+        os.system("git submodule update --init --recursive")
+        logger.info("Setup complete. All repositories successfully linked and downloaded.")
     else:
         parser.print_help()
 

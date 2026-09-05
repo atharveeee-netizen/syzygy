@@ -1,0 +1,18 @@
+[submodule "vendor/browser-use"]
+	path = vendor/browser-use
+	url = https://github.com/browser-use/browser-use.git
+[submodule "vendor/cline"]
+	path = vendor/cline
+	url = https://github.com/cline/cline.git
+[submodule "vendor/letta"]
+	path = vendor/letta
+	url = https://github.com/letta-ai/letta.git
+[submodule "vendor/motion"]
+	path = vendor/motion
+	url = https://github.com/motiondivision/motion.git
+[submodule "vendor/Persona-Quickshell"]
+	path = vendor/Persona-Quickshell
+	url = https://github.com/Yujonpradhananga/Persona-Quickshell.git
+[submodule "vendor/strix"]
+	path = vendor/strix
+	url = https://github.com/usestrix/strix.git
