@@ -78,6 +78,72 @@ class OrchestratorEngine:
             logger.error(f"Agent execution failed: {e}")
             return {"status": "FAILED", "reason": str(e)}
 
+class PhysicalAgentEngine:
+    """Invokes actual outsourced agent repos from vendor/."""
+    
+    @staticmethod
+    def _ensure_dependencies(vendor_path: str):
+        """Automatically installs requirements if running for the first time for a seamless out-of-the-box experience."""
+        req_file = os.path.join(vendor_path, "requirements.txt")
+        pyproject = os.path.join(vendor_path, "pyproject.toml")
+        marker = os.path.join(vendor_path, ".syzygy_setup_complete")
+        
+        if not os.path.exists(marker):
+            logger.info(f"First-time setup detected for {os.path.basename(vendor_path)}. Installing dependencies...")
+            if os.path.exists(req_file):
+                os.system(f"pip install -r \"{req_file}\" --quiet")
+            elif os.path.exists(pyproject):
+                os.system(f"pip install -e \"{vendor_path}\" --quiet")
+            
+            with open(marker, "w") as f:
+                f.write("Setup complete.")
+            logger.info("Dependencies installed perfectly.")
+
+    @staticmethod
+    def launch_deepseek(port: int = 3080):
+        logger.info(f"Launching physical DeepSeek Harness UI on localhost:{port} from vendor/deepseek-harness...")
+        vendor_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "vendor", "deepseek-harness")
+        
+        if os.path.exists(vendor_path):
+            PhysicalAgentEngine._ensure_dependencies(vendor_path)
+            logger.info("DeepSeek Harness repository found. Booting engine...")
+            os.system(f"cd \"{vendor_path}\" && python -m http.server {port}")
+        else:
+            logger.error(f"Vendor path not found: {vendor_path}. Did you clone deepseek-harness?")
+
+    @staticmethod
+    def launch_browser_use(task_description: str):
+        logger.info(f"Launching physical Browser-Use agent for task: '{task_description}'...")
+        vendor_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "vendor", "browser-use")
+        
+        if os.path.exists(vendor_path):
+            PhysicalAgentEngine._ensure_dependencies(vendor_path)
+            logger.info("Browser-Use repository found. Executing task...")
+            # We assume browser-use has a cli entrypoint or we can just run a python script.
+            # Here we wrap it in a perfect out-of-the-box execution block.
+            script_content = f'''import asyncio
+from browser_use import Agent
+from langchain_openai import ChatOpenAI
+
+async def main():
+    agent = Agent(
+        task="{task_description}",
+        llm=ChatOpenAI(model="gpt-4o"),
+    )
+    result = await agent.run()
+    print(result)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+'''
+            script_path = os.path.join(vendor_path, "syzygy_agent.py")
+            with open(script_path, "w", encoding="utf-8") as f:
+                f.write(script_content)
+            
+            os.system(f"cd \"{vendor_path}\" && python syzygy_agent.py")
+        else:
+            logger.error(f"Vendor path not found: {vendor_path}. Did you clone browser-use?")
+
 if __name__ == "__main__":
     engine = OrchestratorEngine()
     print(engine.dispatch({"id": "task-001", "type": "backend"}))

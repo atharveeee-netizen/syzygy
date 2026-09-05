@@ -300,6 +300,14 @@ def main():
     ideate_parser = subparsers.add_parser("ideate", help="Hackathon strategist for out-of-the-box ideas")
     ideate_parser.add_argument("theme", help="Hackathon theme or topic")
 
+    # scrape command (Physical Browser-Use)
+    scrape_parser = subparsers.add_parser("scrape", help="Launch physical Browser-Use AI Agent to scrape/navigate the web autonomously")
+    scrape_parser.add_argument("task", help="The navigation or scraping task description")
+
+    # orchestrate command (Physical DeepSeek Harness)
+    orch_parser = subparsers.add_parser("orchestrate", help="Boot up the physical DeepSeek Harness web daemon")
+    orch_parser.add_argument("--port", type=int, default=3080, help="Port to run the orchestrator UI on")
+
     args = parser.parse_args()
 
     if args.command == "init":
@@ -363,6 +371,12 @@ def main():
         agent = HackathonStrategistAgent()
         report = agent.execute_ideation(args.theme)
         print(json.dumps(report, indent=2))
+    elif args.command == "scrape":
+        from core.orchestrator import PhysicalAgentEngine
+        PhysicalAgentEngine.launch_browser_use(args.task)
+    elif args.command == "orchestrate":
+        from core.orchestrator import PhysicalAgentEngine
+        PhysicalAgentEngine.launch_deepseek(port=args.port)
     else:
         parser.print_help()
 

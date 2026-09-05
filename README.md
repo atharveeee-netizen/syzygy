@@ -67,6 +67,7 @@ project-root/
 | **19** | **Observability & Telemetry** | **OpenTelemetry + Sentry** | `getsentry/sentry` | Traces user journeys, tracks full-stack errors, and records session replays to close the observability gap. |
 | **20** | **Cryptography & Data Privacy** | **Libsodium (TweetNaCl.js)** | `jedisct1/libsodium` | Provides secure key exchange, symmetric/asymmetric encryption, and secure password hashing (Argon2). |
 | **21** | **Web3 & Blockchain** | **Wagmi + Foundry** | `wevm/wagmi` | Best-in-class EVM interaction, robust wallet connection UI, and blazing-fast Rust-based smart contract testing. |
+| **22** | **AI Agent Web Scraper & Navigator** | **Browser-Use** | `browser-use` | Allows AI agents to interact with web browsers autonomously, handling complex DOM scraping and interactions flawlessly out-of-the-box. |
 
 ---
 
