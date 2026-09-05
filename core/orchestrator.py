@@ -175,6 +175,7 @@ VENDOR_CATALOG = {
     },
 
     # ── Edge / On-Device Inference ─────────────────────────────────────────
+    # WINNER: llama.cpp — 68k stars, runs any GGUF model on pure CPU, zero GPU needed
     "llama.cpp": {
         "repo":  "https://github.com/ggml-org/llama.cpp",
         "path":  VENDOR_DIR / "llama.cpp",
@@ -197,7 +198,8 @@ VENDOR_CATALOG = {
         "run":   "mlc_llm chat",
     },
 
-    # ── Social Media Scrapers ──────────────────────────────────────────────
+    # ── Social Media / Web Scraper ─────────────────────────────────────────
+    # WINNER: scrapegraph-ai — LLM-powered, scrapes ANY site with plain English prompt
     "scrapegraph-ai": {
         "repo":  "https://github.com/ScrapeGraphAI/Scrapegraph-ai",
         "path":  VENDOR_DIR / "scrapegraph-ai",
@@ -221,20 +223,22 @@ VENDOR_CATALOG = {
     },
 
     # ── Hardware / CAD / Robotics ──────────────────────────────────────────
+    # WINNER (CAD index): awesome-cad — single reference for all open CAD tools & files
     "awesome-cad": {
         "repo":  "https://github.com/mlightcad/awesome-cad",
         "path":  VENDOR_DIR / "awesome-cad",
         "docs":  "https://github.com/mlightcad/awesome-cad#readme",
-        "install": None,  # Reference list
+        "install": None,
         "run":   None,
     },
     "awesome-robotics": {
         "repo":  "https://github.com/mjyc/awesome-robotics-projects",
         "path":  VENDOR_DIR / "awesome-robotics",
         "docs":  "https://github.com/mjyc/awesome-robotics-projects#readme",
-        "install": None,  # Reference list
+        "install": None,
         "run":   None,
     },
+    # WINNER (physics sim): mujoco — Google DeepMind, most accurate contact-rich simulation
     "mujoco": {
         "repo":  "https://github.com/google-deepmind/mujoco",
         "path":  VENDOR_DIR / "mujoco",
@@ -242,6 +246,7 @@ VENDOR_CATALOG = {
         "install": "pip install mujoco",
         "run":   "python -m mujoco.viewer",
     },
+    # WINNER (PCB): kicad-footprints — official KiCad component footprint library
     "kicad-footprints": {
         "repo":  "https://github.com/KiCad/kicad-footprints",
         "path":  VENDOR_DIR / "kicad-footprints",

@@ -79,3 +79,30 @@
 [submodule "vendor/boneyard"]
 	path = vendor/boneyard
 	url = https://github.com/0xGF/boneyard.git
+[submodule "vendor/llama.cpp"]
+	path = vendor/llama.cpp
+	url = https://github.com/ggml-org/llama.cpp.git
+[submodule "vendor/scrapegraph-ai"]
+	path = vendor/scrapegraph-ai
+	url = https://github.com/ScrapeGraphAI/Scrapegraph-ai.git
+[submodule "vendor/awesome-cad"]
+	path = vendor/awesome-cad
+	url = https://github.com/mlightcad/awesome-cad.git
+[submodule "vendor/mujoco"]
+	path = vendor/mujoco
+	url = https://github.com/google-deepmind/mujoco.git
+[submodule "vendor/llm.c"]
+	path = vendor/llm.c
+	url = https://github.com/karpathy/llm.c.git
+[submodule "vendor/mlc-llm"]
+	path = vendor/mlc-llm
+	url = https://github.com/mlc-ai/mlc-llm.git
+[submodule "vendor/agent-twitter-client"]
+	path = vendor/agent-twitter-client
+	url = https://github.com/the-convocation/twitter-scraper.git
+[submodule "vendor/social-media-agent"]
+	path = vendor/social-media-agent
+	url = https://github.com/langchain-ai/social-media-agent.git
+[submodule "vendor/awesome-robotics"]
+	path = vendor/awesome-robotics
+	url = https://github.com/mjyc/awesome-robotics-projects.git
