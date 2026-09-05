@@ -6,7 +6,7 @@ from .memory import OpenVikingClient
 from .research import FirecrawlResearchIndex
 from .presenter import PPTMasterDeckGenerator
 from .diagrammer import ArchitectureDiagramGenerator
-from .pentest import StrixSecurityAuditor
+from .pentest import StrixPentestAgent
 from .validator import STE100Validator
 
 __all__ = [
@@ -15,6 +15,6 @@ __all__ = [
     "FirecrawlResearchIndex",
     "PPTMasterDeckGenerator",
     "ArchitectureDiagramGenerator",
-    "StrixSecurityAuditor",
+    "StrixPentestAgent",
     "STE100Validator"
 ]

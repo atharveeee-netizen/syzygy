@@ -4,37 +4,51 @@ Antonio Gulli Chapters 2, 3, 4, 7 & Appendix G.
 """
 
 import sys
+import os
 import json
 import logging
+import importlib
 from typing import Dict, Any, List, Optional
 
+# Add parent directory to sys.path to allow module imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 logger = logging.getLogger("SYZYGY.Orchestrator")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 class AgentRouter:
     """Dynamic Model and Agent Routing Engine (Pattern #2 & #7)."""
     
     ROUTES = {
-        "research": "FirecrawlResearchAgent",
-        "presentation": "PPTMasterAgent",
-        "diagram": "DiagramDesignAgent",
-        "security": "StrixPentestAgent",
-        "frontend": "OpenDesignUIAgent",
-        "edge": "CactusNeedleAgent",
-        "backend": "SupabaseBackendAgent",
-        "identity": "ClerkAuthAgent",
-        "devops": "GitHubActionsAgent",
-        "telemetry": "OpenTelemetryAgent",
-        "crypto": "LibsodiumCryptoAgent",
-        "web3": "WagmiWeb3Agent"
+        "research": ("core.research", "FirecrawlResearchAgent"),
+        "presentation": ("core.presenter", "PPTMasterAgent"),
+        "diagram": ("core.diagrammer", "DiagramDesignAgent"),
+        "security": ("core.pentest", "StrixPentestAgent"),
+        "frontend": ("core.frontend", "OpenDesignUIAgent"),
+        "edge": ("core.edge", "CactusNeedleAgent"),
+        "backend": ("core.backend", "SupabaseBackendAgent"),
+        "identity": ("core.identity", "ClerkAuthAgent"),
+        "devops": ("core.devops", "GitHubActionsAgent"),
+        "telemetry": ("core.telemetry", "OpenTelemetryAgent"),
+        "crypto": ("core.crypto", "LibsodiumCryptoAgent"),
+        "web3": ("core.web3", "WagmiWeb3Agent")
     }
 
     @classmethod
-    def resolve_agent(cls, task_type: str) -> str:
-        agent = cls.ROUTES.get(task_type.lower())
-        if not agent:
-            logger.warning(f"Task type '{task_type}' not in primary registry. Defaulting to LeadCoordinator.")
-            return "LeadCoordinator"
-        return agent
+    def resolve_and_load(cls, task_type: str) -> Any:
+        route = cls.ROUTES.get(task_type.lower())
+        if not route:
+            logger.warning(f"Task type '{task_type}' not in primary registry. Defaulting to general handling.")
+            return None
+        
+        module_name, class_name = route
+        try:
+            module = importlib.import_module(module_name)
+            agent_class = getattr(module, class_name)
+            return agent_class()
+        except Exception as e:
+            logger.error(f"Failed to load agent {class_name} from {module_name}: {e}")
+            return None
 
 class OrchestratorEngine:
     def __init__(self, session_id: str = "syzygy_default"):
@@ -44,16 +58,20 @@ class OrchestratorEngine:
 
     def dispatch(self, task: Dict[str, Any]) -> Dict[str, Any]:
         task_type = task.get("type", "general")
-        target_agent = AgentRouter.resolve_agent(task_type)
-        logger.info(f"Dispatching task [{task.get('id', 'N/A')}] to agent: {target_agent}")
+        logger.info(f"Dispatching task [{task.get('id', 'N/A')}] of type: {task_type}")
         
-        return {
-            "status": "DISPATCHED",
-            "assignedAgent": target_agent,
-            "taskId": task.get("id"),
-            "executionUri": f"viking://execution/{target_agent}/{task.get('id')}"
-        }
+        agent_instance = AgentRouter.resolve_and_load(task_type)
+        if not agent_instance:
+            return {"status": "FAILED", "reason": "No agent found for task type"}
+            
+        try:
+            result = agent_instance.run(task)
+            result["executionUri"] = f"viking://execution/{agent_instance.__class__.__name__}/{task.get('id')}"
+            return result
+        except Exception as e:
+            logger.error(f"Agent execution failed: {e}")
+            return {"status": "FAILED", "reason": str(e)}
 
 if __name__ == "__main__":
     engine = OrchestratorEngine()
-    print(engine.dispatch({"id": "task-001", "type": "research"}))
+    print(engine.dispatch({"id": "task-001", "type": "backend"}))

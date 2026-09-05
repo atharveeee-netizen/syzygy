@@ -27,7 +27,7 @@ try:
     from core.research import FirecrawlResearchIndex
     from core.presenter import PPTMasterDeckGenerator
     from core.diagrammer import ArchitectureDiagramGenerator
-    from core.pentest import StrixSecurityAuditor
+    from core.pentest import StrixPentestAgent
     from core.validator import STE100Validator
 except ImportError:
     pass
@@ -309,9 +309,10 @@ def main():
         res = STE100Validator.audit_text(args.text)
         print(json.dumps(res, indent=2))
     elif args.command == "audit":
-        from core.pentest import StrixSecurityAuditor
-        auditor = StrixSecurityAuditor(args.target)
-        report = auditor.run_preflight_audit()
+        from core.pentest import StrixPentestAgent
+        auditor = StrixPentestAgent()
+        # Fake task format for now
+        report = auditor.run({"target": args.target})
         print(json.dumps(report, indent=2))
     else:
         parser.print_help()
