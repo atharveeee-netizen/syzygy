@@ -1,32 +1,44 @@
 # AGENTS.md: Autonomous Agent Execution Directives for Project SYZYGY
-> **MANDATORY INSTRUCTION FOR ALL AI CODING AGENTS (Claude Code, Cursor, Codex, Antigravity, OpenCode)**
+> **MANDATORY INSTRUCTION FOR ALL AI CODING AGENTS (Antigravity, Claude Code, Cursor, Codex, OpenCode)**
 
-Whenever a user instructs you to:
-- *"Use this repo"*
-- *"Build a project using syzygy"*
-- *"Create an app / system"*
-- *"Scaffold a project"*
+## 🚨 PERMANENT GLOBAL DEFAULT: ALL AGENTS ACTIVATED AS PER NEED
 
-**YOU MUST PERMANENTLY AND AUTOMATICALLY FOLLOW THIS EXACT PROTOCOL BEFORE GENERATING ANY APPLICATION CODE:**
+Whenever a user provides a prompt to:
+- *"Build a project..."*
+- *"Create an app / system / tool..."*
+- *"Scaffold a project..."*
+- *"Make a project for [X]..."*
 
----
+**YOU MUST PERMANENTLY AND AUTOMATICALLY EXECUTE THE MULTI-AGENT SYNTHESIS ENGINE BEFORE GENERATING ANY APPLICATION CODE:**
 
-## ⚡ STEP 1: Execute Pre-Project Scaffolding via `syzygy.py`
-
-Run the SYZYGY CLI to generate the **8 Spec-Driven Development (SDD) files**:
 ```bash
-python syzygy.py init "<Project-Name>" --domain <web|distributed|ai|hackathon> --brand <linear|apple|stripe>
+python syzygy.py new "<Full User Prompt>"
 ```
 
-This immediately creates `<project-name>/.spec/` containing:
-1. **`PRD.md`**: Product Requirements Document (Goals, Personas, Functional Requirements).
-2. **`TechSpec.md`**: Technical Specification (Best-in-class tech stack, runtime dependencies, APIs).
-3. **`Architecture.md`**: System Architecture & Multi-Agent Mesh (Mermaid.js distributed topology).
-4. **`AppFlow.md`**: User Journey, Agent Handoffs, and State Machine Transitions.
-5. **`Design.md`**: OpenDesign Contract (Tokens, typography, 8px grid, motion physics).
-6. **`Rules.md`**: ASD-STE100 Simplified Technical English & Anti-AI Slop directives.
-7. **`Schema.md`**: Data Models, JSON-RPC schemas, and OpenViking `viking://` URIs.
-8. **`Tracker.md`**: Milestone execution checklist and verification test matrix.
+This dynamically evaluates the prompt and automatically activates all required specialized agents as per need:
+1. **`ReconEngineAgent`**: Real GitHub API search for reference implementations, CAD files, and packages.
+2. **`FirecrawlResearchIndex`**: Live arXiv queries for scientific papers, equations, and citations.
+3. **`HackathonStrategistAgent`**: Ideation, killer features, market moats, and winning hackathon angles.
+4. **`AIArchitectAgent`**: Hardware sizing (Jetson, ESP32, RPi, Mac, Cloud), memory limits, and quantization profile.
+5. **`ArchitectureDiagramGenerator`**: Syntax-verified distributed Mermaid architecture topology.
+6. **`GitHubActionsAgent`**: Language-specific CI/CD workflow (`.github/workflows/ci.yml`).
+7. **`ScaffoldAuthAgent`**: Identity, session management, and authentication middleware.
+8. **`ScaffoldTelemetryAgent`**: OpenTelemetry distributed tracing and metrics instrumentation.
+9. **`ScaffoldCryptoAgent`**: Cryptographic vault, SecretBox encryption, and key generation.
+10. **`AIMLEngineAgent`**: LoRA/QLoRA training harness, hyperparameters, and dataset scaffolding.
+11. **`StrixPentestAgent`**: Pre-flight security audit script and vulnerability checklist.
+12. **`OpenVikingClient`**: Persistent SQLite memory checkpoint (`viking://projects/<slug>`).
+13. **`STE100Validator`**: Anti-slop audit against ASD-STE100 technical English standards.
+
+This automatically generates the **8 Spec-Driven Development (SDD) files** in `<project-slug>/.spec/`:
+1. **`PRD.md`**: Problem statement, research citations, reference repos, and metrics.
+2. **`TechSpec.md`**: Hardware constraints, framework verdict, and technology stack.
+3. **`Architecture.md`**: Mermaid component mesh and data flow contracts.
+4. **`AppFlow.md`**: Execution sequences and state machine transitions.
+5. **`Design.md`**: OpenDesign tokens, typography (Outfit/Inter), and spring physics.
+6. **`Rules.md`**: ASD-STE100 guidelines and anti-slop code directives.
+7. **`Schema.md`**: Data models, JSON-RPC schemas, and `viking://` memory URIs.
+8. **`Tracker.md`**: Atomic milestone execution checklist.
 
 ---
 

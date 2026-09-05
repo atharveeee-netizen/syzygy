@@ -73,9 +73,12 @@ project-root/
 
 ## 🚀 Quickstart & Agent Commands
 
-### 1. Scaffold a New Project with the 8 SDD Files
+### 1. Synthesize a Turnkey Project from Prompt (All Agents Used As Per Need)
 ```bash
-# Automatically creates <name>/.spec/ with all 8 files
+# Pass any natural language prompt — all agents dynamically evaluate and activate per-need
+python syzygy.py new "Autonomous AI Edge Drone Tracker on Jetson Nano with telemetry and secure auth"
+
+# Or initialize with domain/brand overrides
 python syzygy.py init "QuantumEngine" --domain web --brand linear
 ```
 

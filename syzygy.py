@@ -10,7 +10,7 @@ import json
 import argparse
 import logging
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] [SYZYGY] %(message)s')
@@ -29,238 +29,46 @@ try:
     from core.diagrammer import ArchitectureDiagramGenerator
     from core.pentest import StrixPentestAgent
     from core.validator import STE100Validator
+    from core.synthesizer import ProjectSynthesizer
 except ImportError:
     pass
 
 class SyzygyCLI:
     @staticmethod
-    def init_project(project_name: str, domain: str = "web", brand: str = "linear", target_dir: str = "."):
+    def init_project(prompt_or_name: str, domain: Optional[str] = None, brand: str = "linear", target_dir: str = "."):
         """
-        Scaffolds a new project following the 8-File Spec-Driven Development (SDD) Architecture.
-        Automatically generates:
-          1. PRD.md
-          2. TechSpec.md
-          3. Architecture.md
-          4. AppFlow.md
-          5. Design.md (OpenDesign Contract)
-          6. Rules.md (ASD-STE100 Anti-Slop)
-          7. Schema.md
-          8. Tracker.md
+        Synthesizes a new project from prompt or name using all agents as per need,
+        following the 8-File Spec-Driven Development (SDD) Architecture.
         """
-        dest_root = Path(target_dir) / project_name.lower().replace(" ", "-")
-        spec_dir = dest_root / ".spec"
-        spec_dir.mkdir(parents=True, exist_ok=True)
+        synthesizer = ProjectSynthesizer()
+        res = synthesizer.synthesize(prompt=prompt_or_name, target_dir=target_dir, brand=brand, domain=domain)
+        return res.get("project_dir", target_dir)
 
-        logger.info(f"Scaffolding project '{project_name}' in domain '{domain}' with brand '{brand}'...")
-
-        # Domain-specific tech stack mappings
-        stacks = {
-            "web": {
-                "frontend": "Next.js 16 + React 19 + Tailwind CSS v4 + Motion Engine + ThreeUI",
-                "backend": "Node.js 20 / Python 3.11 FastAPI",
-                "database": "Supabase PostgreSQL / Neon Serverless",
-                "auth": "Clerk / Supabase Auth",
-                "testing": "Playwright + Vitest"
-            },
-            "distributed": {
-                "frontend": "React 19 + Vite + OpenDesign",
-                "backend": "Go / Rust / Python 3.11 AsyncIO",
-                "database": "Apache Iceberg / BigQuery / Redis",
-                "messaging": "NATS / Apache Kafka",
-                "testing": "K6 Load Testing + Pytest"
-            },
-            "ai": {
-                "frontend": "Next.js 16 + Three.js Neural Visualizer",
-                "backend": "Python 3.11 + PyTorch + HuggingFace + DeepSeek Harness",
-                "database": "OpenViking (viking://) + ChromaDB",
-                "edge": "Cactus Needle (14MB SLM, 28MB RAM)",
-                "tuning": "Soup (8B layer-streaming on 4GB VRAM)"
-            },
-            "hackathon": {
-                "frontend": "Next.js 16 + ThreeUI Hero + Boneyard Auto-Skeleton",
-                "backend": "FastAPI + DeepSeek Harness Orchestrator",
-                "database": "Supabase Free Tier",
-                "presentation": "PPT Master 10-Slide Vector SIH Deck",
-                "security": "Strix Security Auditor"
-            }
-        }
-        selected_stack = stacks.get(domain.lower(), stacks["web"])
-
-        # 1. PRD.md
-        prd_content = f"""# Product Requirements Document (PRD)
-## Project: {project_name}
-**Domain:** {domain.upper()} | **Date:** 2026-09-05 | **Status:** DRAFT / APPROVED
-
-### 1. Objective & Vision
-{project_name} is an industrial-grade {domain} system designed with zero AI slop, deterministic reliability, and turn-key developer experience.
-
-### 2. User Personas
-- **Primary Operator:** Engineers and autonomous AI agents requiring deterministic workflows.
-- **Auditor / Evaluator:** Technical juries, security evaluators, and system architects.
-
-### 3. Core Functional Requirements
-- **FR-1:** Autonomous agent integration via standardized Model Context Protocol (MCP).
-- **FR-2:** Real-time state persistence with OpenViking memory abstraction (`viking://`).
-- **FR-3:** Pre-flight security verification verified with Strix multi-agent pentester.
-"""
-        (spec_dir / "PRD.md").write_text(prd_content, encoding="utf-8")
-
-        # 2. TechSpec.md
-        techspec_content = f"""# Technical Specification (TechSpec)
-## Project: {project_name}
-
-### 1. Technology Stack Selection
-- **Frontend Layer:** {selected_stack.get('frontend', 'Next.js 16 + React 19')}
-- **Backend Services:** {selected_stack.get('backend', 'Python 3.11')}
-- **Data & Storage:** {selected_stack.get('database', 'Supabase PostgreSQL')}
-- **Orchestration / Harness:** DeepSeek Harness (dsh) + 66 Agentic Design Patterns
-
-### 2. Runtime Environment
-- Node.js >= 20.x LTS
-- Python >= 3.11
-- Package Manager: `pnpm` & `uv`
-"""
-        (spec_dir / "TechSpec.md").write_text(techspec_content, encoding="utf-8")
-
-        # 3. Architecture.md
-        arch_content = f"""# System Architecture (Architecture.md)
-## Project: {project_name}
-
-### 1. Topology & Component Mesh
-```mermaid
-graph TD
-    CLIENT["Client UI ({selected_stack.get('frontend', 'Frontend')})"]
-    GW["API Gateway / Router"]
-    ORCH["Lead Coordinator (DeepSeek Harness)"]
-    MEM["Context DB (OpenViking / viking://)"]
-    SEC["Security Gate (Strix Pentest)"]
-
-    CLIENT --> GW
-    GW --> ORCH
-    ORCH --> MEM
-    ORCH --> SEC
-```
-"""
-        (spec_dir / "Architecture.md").write_text(arch_content, encoding="utf-8")
-
-        # 4. AppFlow.md
-        appflow_content = f"""# Application Flow (AppFlow.md)
-## Project: {project_name}
-
-### 1. Execution Sequence
-1. **Trigger:** User prompt or webhook initializes Lead Coordinator.
-2. **Context Load:** State retrieved from `viking://session/active`.
-3. **Task Delegation:** Coordinator routes sub-tasks to specialized subagents.
-4. **Validation:** Code and text audited against ASD-STE100 rules.
-5. **Pre-Flight Pentest:** Strix executes automated security scan.
-6. **Delivery:** Verified production artifact delivered.
-"""
-        (spec_dir / "AppFlow.md").write_text(appflow_content, encoding="utf-8")
-
-        # 5. Design.md (OpenDesign Contract)
-        design_content = f"""# OpenDesign Contract (Design.md)
-## Brand: {brand.upper()} | Project: {project_name}
-
-### 1. Visual Tokens
-- **Background:** #090D16 (Deep Space Obsidian)
-- **Surface:** #0F172A (Slate 900)
-- **Surface Hover:** #1E293B (Slate 800)
-- **Accent Primary:** #6366F1 (Indigo 500)
-- **Accent Glow:** rgba(99, 102, 241, 0.25)
-- **Text Primary:** #F8FAFC (Slate 50)
-- **Text Secondary:** #94A3B8 (Slate 400)
-
-### 2. Typography Hierarchy
-- **Headings:** `Outfit`, `Inter`, sans-serif (Weights: 600, 700)
-- **Body:** `Inter`, sans-serif (Weights: 400, 500)
-- **Code:** `JetBrains Mono`, monospace
-
-### 3. Motion & Animation
-- **Spring Physics:** `stiffness: 350, damping: 28`
-- **Transition Duration:** `150ms`
-"""
-        (spec_dir / "Design.md").write_text(design_content, encoding="utf-8")
-
-        # 6. Rules.md
-        rules_content = f"""# Agent & Development Directives (Rules.md)
-## Project: {project_name}
-
-### 1. ASD-STE100 Technical English Standard
-- Eliminate generic AI buzzwords ("revolutionize", "delve", "seamlessly integrate", "cutting-edge").
-- Write procedural instructions under 20 words per sentence.
-- Use active voice with clear subjects.
-
-### 2. Anti-Slop Code Directives
-- No placeholder variables or mockup dummy text.
-- 100% type-annotated code (TypeScript strict / Python typing).
-- Zero hardcoded credentials.
-"""
-        (spec_dir / "Rules.md").write_text(rules_content, encoding="utf-8")
-
-        # 7. Schema.md
-        schema_content = f"""# Data Models & Schemas (Schema.md)
-## Project: {project_name}
-
-### 1. Core State Schema
-```json
-{{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "{project_name}State",
-  "type": "object",
-  "required": ["sessionId", "timestamp", "status"],
-  "properties": {{
-    "sessionId": {{ "type": "string" }},
-    "timestamp": {{ "type": "integer" }},
-    "status": {{ "type": "string", "enum": ["IDLE", "RUNNING", "VERIFIED", "FAILED"] }}
-  }}
-}}
-```
-"""
-        (spec_dir / "Schema.md").write_text(schema_content, encoding="utf-8")
-
-        # 8. Tracker.md
-        tracker_content = f"""# Implementation Tracker (Tracker.md)
-## Project: {project_name}
-
-- [x] **Phase 1: Spec-Driven Development (8 SDD Files Generated)**
-- [ ] **Phase 2: Core Architecture Scaffolding**
-- [ ] **Phase 3: Subagent & API Integration**
-- [ ] **Phase 4: Live Test Verification & Benchmark Pass**
-- [ ] **Phase 5: Strix Pre-Flight Security Audit**
-- [ ] **Phase 6: Final Turnkey Delivery**
-"""
-        (spec_dir / "Tracker.md").write_text(tracker_content, encoding="utf-8")
-
-        # Create basic root README for scaffolded project
-        project_readme = f"""# {project_name}
-> Built with SYZYGY Autonomous Agent Architecture (.spec/ 8-File SDD Standard)
-
-## Specifications
-All project design documents, tech specs, architecture diagrams, and rules are located in [`.spec/`](.spec/):
-- [`PRD.md`](.spec/PRD.md)
-- [`TechSpec.md`](.spec/TechSpec.md)
-- [`Architecture.md`](.spec/Architecture.md)
-- [`AppFlow.md`](.spec/AppFlow.md)
-- [`Design.md`](.spec/Design.md)
-- [`Rules.md`](.spec/Rules.md)
-- [`Schema.md`](.spec/Schema.md)
-- [`Tracker.md`](.spec/Tracker.md)
-"""
-        (dest_root / "README.md").write_text(project_readme, encoding="utf-8")
-
-        logger.info(f"SUCCESS: Scaffolded all 8 SDD files in '{dest_root / '.spec'}'.")
-        return str(dest_root)
 
 def main():
     parser = argparse.ArgumentParser(description="SYZYGY Master Multi-Agent Engineering CLI")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # init command
-    init_parser = subparsers.add_parser("init", help="Scaffold new project with 8 SDD files")
-    init_parser.add_argument("project_name", help="Name of project to create")
-    init_parser.add_argument("--domain", choices=["web", "distributed", "ai", "hackathon"], default="web", help="Project technical domain")
+    init_parser = subparsers.add_parser("init", help="Synthesize new project from prompt or name with all agents per need")
+    init_parser.add_argument("prompt", help="Natural language prompt or project name")
+    init_parser.add_argument("--domain", choices=["web", "distributed", "ai", "hackathon", "edge", "robotics", "security"], default=None, help="Project technical domain override")
     init_parser.add_argument("--brand", choices=["linear", "apple", "stripe", "supabase"], default="linear", help="Design system brand contract")
     init_parser.add_argument("--dir", default=".", help="Target root directory")
+
+    # new command (natural language prompt synthesis)
+    new_parser = subparsers.add_parser("new", help="Synthesize new project from natural language prompt with all agents per need")
+    new_parser.add_argument("prompt", help="Natural language prompt or project description")
+    new_parser.add_argument("--domain", choices=["web", "distributed", "ai", "hackathon", "edge", "robotics", "security"], default=None, help="Project technical domain override")
+    new_parser.add_argument("--brand", choices=["linear", "apple", "stripe", "supabase"], default="linear", help="Design system brand contract")
+    new_parser.add_argument("--dir", default=".", help="Target root directory")
+
+    # project command (alias for new)
+    project_parser = subparsers.add_parser("project", help="Synthesize new project from natural language prompt with all agents per need")
+    project_parser.add_argument("prompt", help="Natural language prompt or project description")
+    project_parser.add_argument("--domain", choices=["web", "distributed", "ai", "hackathon", "edge", "robotics", "security"], default=None, help="Project technical domain override")
+    project_parser.add_argument("--brand", choices=["linear", "apple", "stripe", "supabase"], default="linear", help="Design system brand contract")
+    project_parser.add_argument("--dir", default=".", help="Target root directory")
 
     # research command
     res_parser = subparsers.add_parser("research", help="Extract academic papers and equations via Firecrawl Index")
@@ -316,8 +124,9 @@ def main():
 
     args = parser.parse_args()
 
-    if args.command == "init":
-        SyzygyCLI.init_project(args.project_name, domain=args.domain, brand=args.brand, target_dir=args.dir)
+    if args.command in ["init", "new", "project"]:
+        prompt_val = getattr(args, "prompt", getattr(args, "project_name", "syzygy-app"))
+        SyzygyCLI.init_project(prompt_val, domain=args.domain, brand=args.brand, target_dir=args.dir)
     elif args.command == "research":
         from core.research import FirecrawlResearchIndex
         extractor = FirecrawlResearchIndex()

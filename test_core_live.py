@@ -18,7 +18,8 @@ from core import (
     ScaffoldCryptoAgent,
     ScaffoldAuthAgent,
     ScaffoldTelemetryAgent,
-    GitHubActionsAgent
+    GitHubActionsAgent,
+    ProjectSynthesizer
 )
 
 def test_all():
@@ -55,10 +56,19 @@ def test_all():
     print(f"   Architect target: {decision.get('target_hardware')}, framework: {decision.get('recommended_framework')}")
     assert decision.get("target_hardware") == "JETSON_NANO"
 
-    print("5. Testing Diagrammer...")
+    print("6. Testing Diagrammer...")
     diag = ArchitectureDiagramGenerator.generate_mesh_diagram()
     assert "graph TD" in diag and "subgraph Research" in diag
     print("   Diagram syntax verified!")
+
+    print("7. Testing Master ProjectSynthesizer...")
+    import shutil
+    synth = ProjectSynthesizer()
+    syn_res = synth.synthesize("Build real-time drone telemetry system on Jetson Nano", target_dir="./tmp_test_synth")
+    assert syn_res["status"] == "SUCCESS", "Synthesis failed"
+    assert len(syn_res["activated_agents"]) >= 7, f"Expected >= 7 agents, got {len(syn_res['activated_agents'])}"
+    print(f"   Synthesizer OK! Activated {len(syn_res['activated_agents'])} agents dynamically.")
+    shutil.rmtree("./tmp_test_synth", ignore_errors=True)
 
     print("\n>>> ALL VERIFICATION CHECKS PASSED SUCCESSFULLY! <<<")
 

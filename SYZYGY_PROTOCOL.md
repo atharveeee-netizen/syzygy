@@ -31,8 +31,12 @@ Every project constructed within this framework must maintain a `.spec/` directo
 
 AI agents can execute the SYZYGY protocol using the `syzygy` CLI:
 ```bash
-# Initialize a new project with 8 SDD files
-python syzygy.py init "Project Name" --domain <web|distributed|ai|hackathon> --brand <linear|apple|stripe>
+# Synthesize a new project from prompt using all agents as per need (PERMANENT DEFAULT)
+python syzygy.py new "Autonomous AI Edge Drone Tracker on Jetson Nano with telemetry and secure auth"
+
+# Initialize a new project with explicit domain & brand override
+python syzygy.py init "Project Name" --domain <web|distributed|ai|hackathon|edge|robotics> --brand <linear|apple|stripe>
+
 
 # Run academic research query
 python syzygy.py research "Query"

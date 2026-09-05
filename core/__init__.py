@@ -16,6 +16,7 @@ from .crypto import ScaffoldCryptoAgent
 from .identity import ScaffoldAuthAgent
 from .telemetry import ScaffoldTelemetryAgent
 from .devops import GitHubActionsAgent
+from .synthesizer import ProjectSynthesizer
 
 __all__ = [
     "OrchestratorEngine",
@@ -32,5 +33,7 @@ __all__ = [
     "ScaffoldCryptoAgent",
     "ScaffoldAuthAgent",
     "ScaffoldTelemetryAgent",
-    "GitHubActionsAgent"
+    "GitHubActionsAgent",
+    "ProjectSynthesizer"
 ]
+
