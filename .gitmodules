@@ -16,3 +16,6 @@
 [submodule "vendor/strix"]
 	path = vendor/strix
 	url = https://github.com/usestrix/strix.git
+[submodule "vendor/deepseek-harness"]
+	path = vendor/deepseek-harness
+	url = https://github.com/deepseek-ai/deepseek-harness.git
