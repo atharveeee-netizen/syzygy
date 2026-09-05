@@ -109,3 +109,33 @@
 [submodule "vendor/kicad-footprints"]
 	path = vendor/kicad-footprints
 	url = https://github.com/KiCad/kicad-footprints.git
+[submodule "vendor/diagrams"]
+	path = vendor/diagrams
+	url = https://github.com/mingrammer/diagrams.git
+[submodule "vendor/whichllm"]
+	path = vendor/whichllm
+	url = https://github.com/Andyyyy64/whichllm.git
+[submodule "vendor/anti-ai-slop-writing"]
+	path = vendor/anti-ai-slop-writing
+	url = https://github.com/jalaalrd/anti-ai-slop-writing.git
+[submodule "vendor/paper-search-mcp"]
+	path = vendor/paper-search-mcp
+	url = https://github.com/openags/paper-search-mcp.git
+[submodule "vendor/mem0"]
+	path = vendor/mem0
+	url = https://github.com/mem0ai/mem0.git
+[submodule "vendor/lightning-hydra-template"]
+	path = vendor/lightning-hydra-template
+	url = https://github.com/ashleve/lightning-hydra-template.git
+[submodule "vendor/act"]
+	path = vendor/act
+	url = https://github.com/nektos/act.git
+[submodule "vendor/litellm"]
+	path = vendor/litellm
+	url = https://github.com/BerriAI/litellm.git
+[submodule "vendor/langgraph"]
+	path = vendor/langgraph
+	url = https://github.com/langchain-ai/langgraph.git
+[submodule "vendor/crewAI"]
+	path = vendor/crewAI
+	url = https://github.com/crewAIInc/crewAI.git
