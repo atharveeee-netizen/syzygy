@@ -8,6 +8,7 @@ from .presenter import PPTMasterDeckGenerator
 from .diagrammer import ArchitectureDiagramGenerator
 from .pentest import StrixPentestAgent
 from .validator import STE100Validator
+from .aiml import AIMLEngineAgent
 
 __all__ = [
     "OrchestratorEngine",
@@ -16,5 +17,7 @@ __all__ = [
     "PPTMasterDeckGenerator",
     "ArchitectureDiagramGenerator",
     "StrixPentestAgent",
-    "STE100Validator"
+    "STE100Validator",
+    "AIMLEngineAgent"
 ]
+

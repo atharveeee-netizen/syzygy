@@ -280,6 +280,14 @@ def main():
     sec_parser = subparsers.add_parser("audit", help="Run Strix autonomous security pentest")
     sec_parser.add_argument("--target", default="http://localhost:3000", help="Target URL or endpoint")
 
+    # train command (AI/ML Foundation Model Engineering)
+    train_parser = subparsers.add_parser("train", help="AI/ML training, LoRA/QLoRA scaffolding & hyperparameter validation")
+    train_parser.add_argument("--mode", choices=["lora", "qlora", "scratch", "validate"], default="lora", help="Training architecture mode")
+    train_parser.add_argument("--dir", default="./ml_pipeline", help="Target directory for training harness")
+    train_parser.add_argument("--lr", type=float, default=2e-4, help="Learning rate")
+    train_parser.add_argument("--rank", type=int, default=16, help="LoRA rank (r)")
+    train_parser.add_argument("--alpha", type=int, default=32, help="LoRA alpha (scaling)")
+
     args = parser.parse_args()
 
     if args.command == "init":
@@ -311,8 +319,22 @@ def main():
     elif args.command == "audit":
         from core.pentest import StrixPentestAgent
         auditor = StrixPentestAgent()
-        # Fake task format for now
         report = auditor.run({"target": args.target})
+        print(json.dumps(report, indent=2))
+    elif args.command == "train":
+        from core.aiml import AIMLEngineAgent
+        engine = AIMLEngineAgent()
+        report = engine.run({
+            "action": "validate" if args.mode == "validate" else "scaffold",
+            "project_dir": args.dir,
+            "mode": args.mode,
+            "params": {
+                "learning_rate": args.lr,
+                "lora_r": args.rank,
+                "lora_alpha": args.alpha,
+                "mode": args.mode
+            }
+        })
         print(json.dumps(report, indent=2))
     else:
         parser.print_help()

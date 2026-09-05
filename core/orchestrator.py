@@ -31,7 +31,10 @@ class AgentRouter:
         "devops": ("core.devops", "GitHubActionsAgent"),
         "telemetry": ("core.telemetry", "OpenTelemetryAgent"),
         "crypto": ("core.crypto", "LibsodiumCryptoAgent"),
-        "web3": ("core.web3", "WagmiWeb3Agent")
+        "web3": ("core.web3", "WagmiWeb3Agent"),
+        "aiml": ("core.aiml", "AIMLEngineAgent"),
+        "training": ("core.aiml", "AIMLEngineAgent"),
+        "model": ("core.aiml", "AIMLEngineAgent")
     }
 
     @classmethod

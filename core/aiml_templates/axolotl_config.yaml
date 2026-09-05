@@ -1,0 +1,76 @@
+# SYZYGY Production Axolotl Distributed Training Specification
+# Multi-GPU / Multi-Node Scalable Recipe (FSDP / DeepSpeed ZeRO-3)
+
+base_model: meta-llama/Meta-Llama-3.1-8B-Instruct
+model_type: LlamaForCausalLM
+tokenizer_type: AutoTokenizer
+
+load_in_8bit: false
+load_in_4bit: true
+strict: false
+
+datasets:
+  - path: HuggingFaceH4/no_robots
+    type: sharegpt
+    conversation: chatml
+
+dataset_prepared_path: last_run_prepared
+val_set_size: 0.05
+output_dir: ./syzygy_axolotl_model
+
+adapter: qlora
+lora_model_dir:
+
+sequence_len: 4096
+sample_packing: true
+pad_to_sequence_len: true
+
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - v_proj
+  - k_proj
+  - o_proj
+  - gate_proj
+  - down_proj
+  - up_proj
+
+wandb_project: syzygy-training
+wandb_entity:
+wandb_watch:
+wandb_name:
+wandb_run_id:
+
+gradient_accumulation_steps: 4
+micro_batch_size: 2
+num_epochs: 3
+optimizer: paged_adamw_8bit
+lr_scheduler: cosine
+learning_rate: 0.0002
+
+train_on_inputs: false
+group_by_length: false
+bf16: auto
+fp16:
+tf32: true
+
+gradient_checkpointing: true
+early_stopping_patience:
+resume_from_checkpoint:
+local_rank:
+logging_steps: 1
+xformers_attention:
+flash_attention: true
+
+warmup_steps: 100
+evals_per_epoch: 4
+saves_per_epoch: 1
+debug:
+deepspeed:
+weight_decay: 0.01
+fsdp:
+fsdp_config:
+special_tokens:
+  pad_token: "<|finetune_right_pad_id|>"

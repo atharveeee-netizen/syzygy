@@ -58,7 +58,7 @@ project-root/
 | **10** | **Autonomous Security Pentesting** | **Strix Multi-Agent Pentesting** | `Desktop\curated-repos\strix` | Autonomous agent team that launches, attacks, and discovers vulnerabilities in running apps with auto-patching. |
 | **11** | **Anti-AI Slop & Documentation** | **Simplified Technical English (ASD-STE100)** | `simplified-technical-english` | Aerospace maintenance documentation standard that eliminates fluff, ambiguity, and generic AI text slop. |
 | **12** | **On-Device Edge Model** | **Cactus Needle** | `cactus-compute/needle` | 14MB model running in 28MB RAM; executes command tool-calling locally without GPU requirement. |
-| **13** | **Consumer GPU Fine-Tuning** | **Soup** | `MakazhanAlpamys/Soup` | Enables fine-tuning 8B parameter models on a modest 4GB VRAM GPU via layer-streaming architecture. |
+| **13** | **Foundation Model Training & LoRA/QLoRA Harness** | **Unsloth + Axolotl + Hugging Face TRL** | `unsloth` + `axolotl` | 2-5x faster training, 80% less VRAM, custom Triton backprop kernels, and YAML-driven multi-GPU FSDP/DeepSpeed orchestration. |
 | **14** | **Mechanistic Interpretability** | **NNsight** | `ndif-team/nnsight` | Standardized API for surgical tracing and manipulation of internal model activations and attention heads. |
 | **15** | **Free Cloud Infrastructure & APIs** | **Free-for-Dev + Public-APIs** | `free-for-dev` + `public-apis` | Complete registry of zero-cost hosting, databases, auth, and free public data endpoints. |
 | **16** | **Backend Architecture & Database** | **Supabase + Hono** | `supabase/cli` | Handles Postgres database, Row Level Security (RLS), realtime subscriptions, and Edge Functions. |
@@ -97,6 +97,60 @@ python syzygy.py validate "This cutting-edge framework will revolutionize multi-
 ```bash
 python syzygy.py audit --target http://localhost:3000
 ```
+
+### 6. Scaffold & Audit AI/ML Model Training Pipeline
+```bash
+# Scaffold QLoRA fine-tuning environment with Unsloth / PEFT
+python syzygy.py train --mode lora --dir ./my_model_finetune --lr 2e-4 --rank 16 --alpha 32
+
+# Scaffold Modern Transformer from scratch (RoPE + RMSNorm + GQA + SwiGLU)
+python syzygy.py train --mode scratch --dir ./my_model_scratch
+
+# Validate training hyperparameters against industry stability heuristics
+python syzygy.py train --mode validate --lr 8e-4 --rank 32 --alpha 16
+```
+
+---
+
+## 🧠 Foundation Model Engineering & AI Agent Parameter Architecture
+
+### 1. Modern Transformer Architecture From Scratch
+For production models built from the ground up, SYZYGY provides [`core/aiml_templates/model_scratch.py`](file:///C:/Users/25beevdt047/.gemini/antigravity-ide/scratch/syzygy/core/aiml_templates/model_scratch.py) implementing the Llama 3 / DeepSeek-V3 architectural standard:
+- **Rotary Position Embeddings (RoPE)**: Eliminates absolute position drift; supports high context scaling ($\theta = 500,000$).
+- **RMSNorm**: Computes root-mean-square normalization for numerical stability without variance mean-centering.
+- **Grouped-Query Attention (GQA)**: $4:1$ Query-to-Key/Value head ratio reduces KV cache footprint by 75% during agent autoregressive decoding.
+- **SwiGLU Feed-Forward Networks**: Gated non-linear representation providing superior parameter efficiency over standard GELU/ReLU.
+- **Scaled Dot-Product Attention (SDPA)**: Hardware-accelerated memory-efficient attention matching FlashAttention-2 speed.
+
+### 2. Parameter-Efficient Fine-Tuning (PEFT / QLoRA)
+Fine-tune 8B-70B parameter models on a single GPU using [`core/aiml_templates/train_lora.py`](file:///C:/Users/25beevdt047/.gemini/antigravity-ide/scratch/syzygy/core/aiml_templates/train_lora.py) powered by **Unsloth** and Hugging Face **TRL**:
+- **4-bit NormalFloat (NF4)**: Information-theoretically optimal distribution for normally distributed weights.
+- **Double Quantization**: Quantizes quantization constants to save an additional 0.37 bits per parameter.
+- **All-Linear LoRA Target Modules**: Adapts `q_proj`, `k_proj`, `v_proj`, `o_proj`, `gate_proj`, `up_proj`, and `down_proj`.
+- **Scaling Heuristic**: Set $\alpha = 2 \times r$. E.g., Rank $r = 16, \alpha = 32$ or Rank $r = 32, \alpha = 64$.
+- **Paged AdamW 8-bit**: Dynamically pages optimizer states to CPU RAM to prevent VRAM spikes during backpropagation.
+
+### 3. Autonomous AI Agent Hyperparameter Guide
+When deploying models for autonomous multi-agent execution, configure sampling parameters as defined in [`core/aiml_templates/agent_inference.py`](file:///C:/Users/25beevdt047/.gemini/antigravity-ide/scratch/syzygy/core/aiml_templates/agent_inference.py):
+
+| Parameter | Tool-Calling / Deterministic JSON | Reasoning & Planning | Creative Synthesis | Description |
+|---|---|---|---|---|
+| **Temperature ($T$)** | `0.0` | `0.6` | `0.8 - 0.9` | Controls entropy. Keep 0.0 for strict JSON schema compliance. |
+| **Top-P (Nucleus)** | `1.0` (or `0.95`) | `0.95` | `0.90` | Cumulative probability mass threshold. |
+| **Min-P** | `0.0` | `0.05` | `0.05` | Dynamic truncation: discards tokens with prob $< p_{\text{max}} \times \text{min\_p}$. Eliminates hallucinations. |
+| **Presence Penalty** | `0.0` | `0.1` | `0.2` | Penalizes token presence; prevents infinite tool-calling loops. |
+| **Frequency Penalty** | `0.0` | `0.1` | `0.3` | Penalizes repetitive phrase repetition. |
+| **Stop Sequences** | `["<\|eot_id\|>", "</s>"]` | `["<\|eot_id\|>"]` | `["<\|eot_id\|>"]` | Immediate token stream termination triggers. |
+
+---
+
+## 🏛️ Autonomous Agent Integration Contract
+
+Whenever an AI coding agent (like Antigravity, Claude, or DeepSeek) enters this repository:
+1. **Never code blind**: Read the active project's `.spec/` directory first (`PRD.md`, `TechSpec.md`, `Architecture.md`).
+2. **Adhere to `DESIGN.md`**: Respect token definitions, color palettes, and typographic scales without ad-hoc inline styles.
+3. **Execute via SYZYGY Master CLI**: Use `python syzygy.py` for all scaffolding, research extraction, presentation rendering, security auditing, and model training.
+4. **Zero AI Slop**: Write high-density, precise engineering documentation governed by ASD-STE100 guidelines.
 
 ---
 
