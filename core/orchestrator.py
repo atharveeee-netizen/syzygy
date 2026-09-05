@@ -34,7 +34,10 @@ class AgentRouter:
         "web3": ("core.web3", "WagmiWeb3Agent"),
         "aiml": ("core.aiml", "AIMLEngineAgent"),
         "training": ("core.aiml", "AIMLEngineAgent"),
-        "model": ("core.aiml", "AIMLEngineAgent")
+        "model": ("core.aiml", "AIMLEngineAgent"),
+        "recon": ("core.recon", "ReconEngineAgent"),
+        "architect": ("core.architect", "AIArchitectAgent"),
+        "ideation": ("core.ideation", "HackathonStrategistAgent")
     }
 
     @classmethod

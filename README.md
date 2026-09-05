@@ -140,7 +140,27 @@ When deploying models for autonomous multi-agent execution, configure sampling p
 | **Min-P** | `0.0` | `0.05` | `0.05` | Dynamic truncation: discards tokens with prob $< p_{\text{max}} \times \text{min\_p}$. Eliminates hallucinations. |
 | **Presence Penalty** | `0.0` | `0.1` | `0.2` | Penalizes token presence; prevents infinite tool-calling loops. |
 | **Frequency Penalty** | `0.0` | `0.1` | `0.3` | Penalizes repetitive phrase repetition. |
-| **Stop Sequences** | `["<\|eot_id\|>", "</s>"]` | `["<\|eot_id\|>"]` | `["<\|eot_id\|>"]` | Immediate token stream termination triggers. |
+| **Stop Sequences** | `["<|eot_id|>", "</s>"]` | `["<|eot_id|>"]` | `["<|eot_id|>"]` | Immediate token stream termination triggers. |
+
+### 4. How to Actually Build a Model Using SYZYGY
+When you or an autonomous agent needs to build, fine-tune, or align a model, SYZYGY does not reinvent the wheel. It delegates the heavy lifting to the absolute best industry-standard repositories built by elite AI engineers:
+- **[Unsloth](https://github.com/unslothai/unsloth)** (by Daniel & Michael Han): For 2x faster, 70% less memory QLoRA fine-tuning.
+- **[Axolotl](https://github.com/axolotl-ai-cloud/axolotl)** (by Wing Lian): For multi-GPU FSDP/DeepSpeed YAML-driven orchestration.
+- **[vLLM](https://github.com/vllm-project/vllm)**: For high-throughput inference serving.
+
+**Step-by-Step Workflow:**
+1. **Initialize the Scaffold:**
+   ```bash
+   python syzygy.py train --mode lora --dir ./my_model
+   ```
+   *This commands SYZYGY to clone the necessary Unsloth/Axolotl configurations and prepare the `train_lora.py` harness.*
+2. **Set Constraints (Hardware-Aware Architect):**
+   ```bash
+   python syzygy.py architect "I want to deploy this model on a Raspberry Pi 4"
+   ```
+   *SYZYGY will instantly calculate that you cannot run a full 8B model and will dynamically adjust your scaffolding to use `llama.cpp` and `Q4_K_M` GGUF quantization instead.*
+3. **Execute Training:**
+   Run the scaffolded `train_lora.py` script. SYZYGY's configuration guarantees that mathematically optimal parameters (like $\alpha = 2 \times r$) are strictly enforced to prevent catastrophic forgetting.
 
 ---
 

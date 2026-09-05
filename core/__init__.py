@@ -9,6 +9,9 @@ from .diagrammer import ArchitectureDiagramGenerator
 from .pentest import StrixPentestAgent
 from .validator import STE100Validator
 from .aiml import AIMLEngineAgent
+from .recon import ReconEngineAgent
+from .architect import AIArchitectAgent
+from .ideation import HackathonStrategistAgent
 
 __all__ = [
     "OrchestratorEngine",
@@ -18,6 +21,9 @@ __all__ = [
     "ArchitectureDiagramGenerator",
     "StrixPentestAgent",
     "STE100Validator",
-    "AIMLEngineAgent"
+    "AIMLEngineAgent",
+    "ReconEngineAgent",
+    "AIArchitectAgent",
+    "HackathonStrategistAgent"
 ]
 

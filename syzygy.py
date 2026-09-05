@@ -288,6 +288,18 @@ def main():
     train_parser.add_argument("--rank", type=int, default=16, help="LoRA rank (r)")
     train_parser.add_argument("--alpha", type=int, default=32, help="LoRA alpha (scaling)")
 
+    # recon command
+    recon_parser = subparsers.add_parser("recon", help="Autonomous reconnaissance for pre-existing templates and PCBs")
+    recon_parser.add_argument("query", help="What to search for (e.g., 'ESP32 motor controller PCB')")
+
+    # architect command
+    architect_parser = subparsers.add_parser("architect", help="Hardware-aware AI Architect to judge deployment strategies")
+    architect_parser.add_argument("constraints", help="Deployment constraints (e.g., 'deploy on esp32')")
+
+    # ideate command
+    ideate_parser = subparsers.add_parser("ideate", help="Hackathon strategist for out-of-the-box ideas")
+    ideate_parser.add_argument("theme", help="Hackathon theme or topic")
+
     args = parser.parse_args()
 
     if args.command == "init":
@@ -335,6 +347,21 @@ def main():
                 "mode": args.mode
             }
         })
+        print(json.dumps(report, indent=2))
+    elif args.command == "recon":
+        from core.recon import ReconEngineAgent
+        agent = ReconEngineAgent()
+        report = agent.execute_recon(args.query)
+        print(json.dumps(report, indent=2))
+    elif args.command == "architect":
+        from core.architect import AIArchitectAgent
+        agent = AIArchitectAgent()
+        report = agent.judge_architecture(args.constraints)
+        print(report)
+    elif args.command == "ideate":
+        from core.ideation import HackathonStrategistAgent
+        agent = HackathonStrategistAgent()
+        report = agent.execute_ideation(args.theme)
         print(json.dumps(report, indent=2))
     else:
         parser.print_help()
