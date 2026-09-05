@@ -1,0 +1,26 @@
+{
+  "name": "syzygy",
+  "version": "1.0.0",
+  "description": "Master Multi-Agent Autonomous Engineering Framework & Spec-Driven Development Engine",
+  "main": "syzygy.py",
+  "scripts": {
+    "init": "python syzygy.py init",
+    "research": "python syzygy.py research",
+    "deck": "python syzygy.py deck",
+    "validate": "python syzygy.py validate",
+    "audit": "python syzygy.py audit"
+  },
+  "keywords": [
+    "multi-agent",
+    "orchestrator",
+    "spec-driven-development",
+    "opendesign",
+    "claude-design",
+    "anti-ai-slop",
+    "ppt-master",
+    "strix-security",
+    "firecrawl"
+  ],
+  "author": "Atharve Dahima",
+  "license": "MIT"
+}

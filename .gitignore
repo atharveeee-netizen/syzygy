@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+node_modules/
+.env
+.env.local
+.DS_Store
+Thumbs.db
+dist/
+build/
+*.log
+*.pptx
+!templates/**/*.pptx
