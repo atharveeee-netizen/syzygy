@@ -68,6 +68,15 @@ project-root/
 | **20** | **Cryptography & Data Privacy** | **Libsodium (TweetNaCl.js)** | `jedisct1/libsodium` | Provides secure key exchange, symmetric/asymmetric encryption, and secure password hashing (Argon2). |
 | **21** | **Web3 & Blockchain** | **Wagmi + Foundry** | `wevm/wagmi` | Best-in-class EVM interaction, robust wallet connection UI, and blazing-fast Rust-based smart contract testing. |
 | **22** | **AI Agent Web Scraper & Navigator** | **Browser-Use** | `browser-use` | Allows AI agents to interact with web browsers autonomously, handling complex DOM scraping and interactions flawlessly out-of-the-box. |
+| **23** | **Publication-Grade Architectural Figures** | **OpenClaw PaperBanana** | GoatInAHat/openclaw-paperbanana | Generates true publication-quality academic figures and mathematical plots from text. |
+| **24** | **AI-Native LaTeX Editor** | **Octree** | octree-labs/octree | AI-powered local LaTeX environment that fixes compilation errors and writes academic math automatically. |
+| **25** | **Academic Engineering Explainer** | **PaperDebugger** | PaperDebugger/paperdebugger | MCP-based multi-agent system designed for academic critique with strict CSE/Electronic engineering vocabulary. |
+| **26** | **147 Agent Personas** | **Agency Agents** | msitarzewski/agency-agents | Collection of 147 specialized agent prompts spanning engineering, finance, and design. |
+| **27** | **Paper & Research Environments** | **PaperGym** | zju-real/papergym | RL environments and tasks for academic paper generation and research benchmarking. |
+| **28** | **Vibe Coding Full-Stack Agent** | **OpenManus** | mannaandpoetry/OpenManus | Open-source equivalent of Manus.im for autonomous app generation and web automation. |
+| **29** | **ML Architecture from Scratch** | **TrenTorch** | TrenTorch/TrenTorch | Deep learning curriculum for building Neural Networks from scratch in pure NumPy. |
+| **30** | **Multi-Persona Mentor Board** | **Founder Council** | ounder-council-skill | Claude Custom Skill to simulate a diverse advisory board of iconic tech founders. |
+| **31** | **Document to Markdown Converter** | **MarkItDown** | microsoft/markitdown | Microsoft's official tool to perfectly convert PDFs, Word, and Excel into LLM-readable Markdown. |
 
 ---
 
@@ -189,3 +198,4 @@ The agent reads [`AGENTS.md`](AGENTS.md) and [`SYZYGY_PROTOCOL.md`](SYZYGY_PROTO
 
 ## 📜 License
 Distributed under the **MIT License**. Created for developers and autonomous agents worldwide.
+
