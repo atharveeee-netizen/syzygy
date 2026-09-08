@@ -75,3 +75,54 @@ class ArchitectureDiagramGenerator:
                 lines.append(f"    {edge['from']} {edge_type} {edge['to']}")
                 
         return "\n".join(lines)
+
+
+class CanonicalImageHarness:
+    """
+    SYZYGY Canonical Technical Image Generation Engine.
+    Enforces pure white (#ffffff) canvas, physical BOM silicon anchoring,
+    zero-paragraph/zero-bullet constraints, and reference style conditioning.
+    """
+    CANONICAL_PALETTE = {
+        "bg": "#ffffff",
+        "lines": "#0f172a",
+        "primary": "#0284c7",
+        "success": "#16a34a",
+        "warning": "#d97706",
+        "alert": "#e11d48",
+        "box_fill": "#f8fafc",
+        "box_border": "#cbd5e1"
+    }
+
+    @staticmethod
+    def build_canonical_prompt(title: str,
+                               system_name: str,
+                               diagram_type: str,
+                               sections: List[Dict[str, Any]],
+                               scorecard: List[str] = None) -> str:
+        """
+        Builds a verified, zero-AI-slop technical prompt for DeepMind Imagen 3.
+        Mandates pure white canvas, explicit silicon part numbers, and no text walls.
+        """
+        prompt_lines = [
+            f"High-resolution technical engineering {diagram_type} for {system_name}: '{title}' on pure white background (#ffffff).",
+            "Modern clean IEEE engineering publication style with crisp black linework, pastel engineering fills, component illustrations, circuit chips, waveforms, and directional data arrows.",
+            "Strictly pictorial schematic and flowchart format. Absolutely NO paragraphs and NO bullet point lists."
+        ]
+
+        for sec in sections:
+            prompt_lines.append(f"\n{sec.get('heading', 'Subsystem Layer')}:")
+            for item in sec.get('items', []):
+                prompt_lines.append(f"- {item}")
+
+        if scorecard:
+            prompt_lines.append("\nVisual Scorecard Strip:")
+            for sc in scorecard:
+                prompt_lines.append(f"- {sc}")
+
+        prompt_lines.append(
+            "\nStyle: Clean technical IEEE whitepaper graphic, pure white canvas (#ffffff), dark technical lines, sharp vector iconography, zero decorative AI slop, zero text paragraphs, zero bullet lists."
+        )
+
+        return "\n".join(prompt_lines)
+

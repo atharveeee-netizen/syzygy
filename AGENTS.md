@@ -51,6 +51,7 @@ Never use generic, outdated, or default libraries. You MUST use the benchmarked 
 - **Multi-Agent Orchestration:** DeepSeek Harness (`dsh`) + Antonio Gulli's 66 Agentic Patterns.
 - **Academic Research:** Firecrawl Research Index (43M+ scientific papers, zero hallucination).
 - **Architecture Flowcharts:** Diagram Design + System Design 101.
+- **Technical Image Generation:** SYZYGY Canonical Image Harness (`docs/CANONICAL_IMAGE_GENERATION_HARNESS.md`) — DeepMind Imagen 3 + Reference Style Conditioning (`ImagePaths`) + Pure White Canvas (`#ffffff`) + Physical Silicon BOM Anchoring + Zero-Text-Wall constraint.
 - **Presentations & Slides:** PPT Master (native vector `.pptx` shapes, no flat images) + SIH Grand Finale 10-slide deck.
 - **Agent Memory:** OpenViking (`viking://` URI namespace) + AgentMemory.
 - **Pre-Flight Pentesting:** Strix Multi-Agent Pentesting.

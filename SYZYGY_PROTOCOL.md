@@ -9,6 +9,7 @@ A *syzygy* represents linear gravitational alignment. In autonomous software eng
 2. **Deterministic Context (The 8 SDD Specification Files)**
 3. **Open-Source Champion Tooling (Best-in-Class Matrix)**
 4. **Automated Quality & Security Gates (ASD-STE100 + Strix)**
+5. **Canonical Technical Visualizations (Zero-Slop DeepMind Imagen 3 Harness + Pure White Canvas + Hardware BOM Anchoring)**
 
 ---
 

@@ -58,20 +58,21 @@ project-root/
 | **10** | **Autonomous Security Pentesting** | **Strix Multi-Agent Pentesting** | `Desktop\curated-repos\strix` | Autonomous agent team that launches, attacks, and discovers vulnerabilities in running apps with auto-patching. |
 | **11** | **Anti-AI Slop & Documentation** | **Simplified Technical English (ASD-STE100)** | `simplified-technical-english` | Aerospace maintenance documentation standard that eliminates fluff, ambiguity, and generic AI text slop. |
 | **12** | **On-Device Edge Model** | **Cactus Needle** | `cactus-compute/needle` | 14MB model running in 28MB RAM; executes command tool-calling locally without GPU requirement. |
-| **13** | **Foundation Model Training & LoRA/QLoRA Harness** | **Unsloth + Axolotl + Hugging Face TRL** | `unsloth` + `axolotl` | 2-5x faster training, 80% less VRAM, custom Triton backprop kernels, and YAML-driven multi-GPU FSDP/DeepSpeed orchestration. |
-| **14** | **Mechanistic Interpretability** | **NNsight** | `ndif-team/nnsight` | Standardized API for surgical tracing and manipulation of internal model activations and attention heads. |
-| **15** | **Free Cloud Infrastructure & APIs** | **Free-for-Dev + Public-APIs** | `free-for-dev` + `public-apis` | Complete registry of zero-cost hosting, databases, auth, and free public data endpoints. |
-| **16** | **Backend Architecture & Database** | **Supabase + Hono** | `supabase/cli` | Handles Postgres database, Row Level Security (RLS), realtime subscriptions, and Edge Functions. |
-| **17** | **Authentication & Identity** | **Clerk + RBAC / Auth.js** | `clerk/javascript` | Complete drop-in identity management, 2FA, passwordless, session management, and JWT validation. |
-| **18** | **CI/CD & DevOps Workflow** | **GitHub Actions + Docker** | `actions/runner` | Automates linting, type-checking, building, testing, and edge deployment for zero-downtime releases. |
-| **19** | **Observability & Telemetry** | **OpenTelemetry + Sentry** | `getsentry/sentry` | Traces user journeys, tracks full-stack errors, and records session replays to close the observability gap. |
-| **20** | **Cryptography & Data Privacy** | **Libsodium (TweetNaCl.js)** | `jedisct1/libsodium` | Provides secure key exchange, symmetric/asymmetric encryption, and secure password hashing (Argon2). |
-| **21** | **Web3 & Blockchain** | **Wagmi + Foundry** | `wevm/wagmi` | Best-in-class EVM interaction, robust wallet connection UI, and blazing-fast Rust-based smart contract testing. |
-| **22** | **AI Agent Web Scraper & Navigator** | **Browser-Use** | `browser-use` | Allows AI agents to interact with web browsers autonomously, handling complex DOM scraping and interactions flawlessly out-of-the-box. |
-| **23** | **Publication-Grade Architectural Figures** | **OpenClaw PaperBanana** | GoatInAHat/openclaw-paperbanana | Generates true publication-quality academic figures and mathematical plots from text. |
-| **24** | **AI-Native LaTeX Editor** | **Octree** | octree-labs/octree | AI-powered local LaTeX environment that fixes compilation errors and writes academic math automatically. |
-| **25** | **Academic Engineering Explainer** | **PaperDebugger** | PaperDebugger/paperdebugger | MCP-based multi-agent system designed for academic critique with strict CSE/Electronic engineering vocabulary. |
-| **26** | **147 Agent Personas** | **Agency Agents** | msitarzewski/agency-agents | Collection of 147 specialized agent prompts spanning engineering, finance, and design. |
+| **13** | **Technical Image Generation** | **SYZYGY Canonical Image Harness** | [`docs/CANONICAL_IMAGE_GENERATION_HARNESS.md`](docs/CANONICAL_IMAGE_GENERATION_HARNESS.md) | DeepMind Imagen 3 + Reference Style Conditioning (`ImagePaths`) + Pure White (`#ffffff`) Canvas + Physical BOM Silicon Anchoring + Zero-Text-Wall constraint. |
+| **14** | **Foundation Model Training & LoRA/QLoRA Harness** | **Unsloth + Axolotl + Hugging Face TRL** | `unsloth` + `axolotl` | 2-5x faster training, 80% less VRAM, custom Triton backprop kernels, and YAML-driven multi-GPU FSDP/DeepSpeed orchestration. |
+| **15** | **Mechanistic Interpretability** | **NNsight** | `ndif-team/nnsight` | Standardized API for surgical tracing and manipulation of internal model activations and attention heads. |
+| **16** | **Free Cloud Infrastructure & APIs** | **Free-for-Dev + Public-APIs** | `free-for-dev` + `public-apis` | Complete registry of zero-cost hosting, databases, auth, and free public data endpoints. |
+| **17** | **Backend Architecture & Database** | **Supabase + Hono** | `supabase/cli` | Handles Postgres database, Row Level Security (RLS), realtime subscriptions, and Edge Functions. |
+| **18** | **Authentication & Identity** | **Clerk + RBAC / Auth.js** | `clerk/javascript` | Complete drop-in identity management, 2FA, passwordless, session management, and JWT validation. |
+| **19** | **CI/CD & DevOps Workflow** | **GitHub Actions + Docker** | `actions/runner` | Automates linting, type-checking, building, testing, and edge deployment for zero-downtime releases. |
+| **20** | **Observability & Telemetry** | **OpenTelemetry + Sentry** | `getsentry/sentry` | Traces user journeys, tracks full-stack errors, and records session replays to close the observability gap. |
+| **21** | **Cryptography & Data Privacy** | **Libsodium (TweetNaCl.js)** | `jedisct1/libsodium` | Provides secure key exchange, symmetric/asymmetric encryption, and secure password hashing (Argon2). |
+| **22** | **Web3 & Blockchain** | **Wagmi + Foundry** | `wevm/wagmi` | Best-in-class EVM interaction, robust wallet connection UI, and blazing-fast Rust-based smart contract testing. |
+| **23** | **AI Agent Web Scraper & Navigator** | **Browser-Use** | `browser-use` | Allows AI agents to interact with web browsers autonomously, handling complex DOM scraping and interactions flawlessly out-of-the-box. |
+| **24** | **Publication-Grade Architectural Figures** | **OpenClaw PaperBanana** | GoatInAHat/openclaw-paperbanana | Generates true publication-quality academic figures and mathematical plots from text. |
+| **25** | **AI-Native LaTeX Editor** | **Octree** | octree-labs/octree | AI-powered local LaTeX environment that fixes compilation errors and writes academic math automatically. |
+| **26** | **Academic Engineering Explainer** | **PaperDebugger** | PaperDebugger/paperdebugger | MCP-based multi-agent system designed for academic critique with strict CSE/Electronic engineering vocabulary. |
+| **27** | **147 Agent Personas** | **Agency Agents** | msitarzewski/agency-agents | Collection of 147 specialized agent prompts spanning engineering, finance, and design. |
 | **27** | **Paper & Research Environments** | **PaperGym** | zju-real/papergym | RL environments and tasks for academic paper generation and research benchmarking. |
 | **28** | **Vibe Coding Full-Stack Agent** | **OpenManus** | mannaandpoetry/OpenManus | Open-source equivalent of Manus.im for autonomous app generation and web automation. |
 | **29** | **ML Architecture from Scratch** | **TrenTorch** | TrenTorch/TrenTorch | Deep learning curriculum for building Neural Networks from scratch in pure NumPy. |
