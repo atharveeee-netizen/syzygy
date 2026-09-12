@@ -1,0 +1,20 @@
+{
+  "name": "object-tracker",
+  "version": "1.0.0",
+  "description": "Web service to identify and localize colored items in an image",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rafael Konlechner",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.3",
+    "express-fileupload": "^0.1.4",
+    "jimp": "^0.2.28",
+    "nodeunit": "^0.11.2",
+    "png-js": "^0.1.1",
+    "tracking": "^1.1.3"
+  }
+}
