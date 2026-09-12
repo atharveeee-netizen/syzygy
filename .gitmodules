@@ -1,18 +1,9 @@
 [submodule "vendor/browser-use"]
 	path = vendor/browser-use
 	url = https://github.com/browser-use/browser-use.git
-[submodule "vendor/cline"]
-	path = vendor/cline
-	url = https://github.com/cline/cline.git
-[submodule "vendor/letta"]
-	path = vendor/letta
-	url = https://github.com/letta-ai/letta.git
 [submodule "vendor/motion"]
 	path = vendor/motion
 	url = https://github.com/motiondivision/motion.git
-[submodule "vendor/Persona-Quickshell"]
-	path = vendor/Persona-Quickshell
-	url = https://github.com/Yujonpradhananga/Persona-Quickshell.git
 [submodule "vendor/strix"]
 	path = vendor/strix
 	url = https://github.com/usestrix/strix.git
@@ -25,54 +16,27 @@
 [submodule "vendor/unsloth"]
 	path = vendor/unsloth
 	url = https://github.com/unslothai/unsloth.git
-[submodule "vendor/axolotl"]
-	path = vendor/axolotl
-	url = https://github.com/axolotl-ai-cloud/axolotl.git
 [submodule "vendor/nnsight"]
 	path = vendor/nnsight
 	url = https://github.com/ndif-team/nnsight.git
 [submodule "vendor/vllm"]
 	path = vendor/vllm
 	url = https://github.com/vllm-project/vllm.git
-[submodule "vendor/supabase-cli"]
-	path = vendor/supabase-cli
-	url = https://github.com/supabase/cli.git
-[submodule "vendor/wagmi"]
-	path = vendor/wagmi
-	url = https://github.com/wevm/wagmi.git
 [submodule "vendor/foundry"]
 	path = vendor/foundry
 	url = https://github.com/foundry-rs/foundry.git
-[submodule "vendor/sentry-javascript"]
-	path = vendor/sentry-javascript
-	url = https://github.com/getsentry/sentry-javascript.git
 [submodule "vendor/libsodium"]
 	path = vendor/libsodium
 	url = https://github.com/jedisct1/libsodium.git
 [submodule "vendor/ppt-master"]
 	path = vendor/ppt-master
 	url = https://github.com/hugohe3/ppt-master.git
-[submodule "vendor/free-for-dev"]
-	path = vendor/free-for-dev
-	url = https://github.com/ripienaar/free-for-dev.git
-[submodule "vendor/public-apis"]
-	path = vendor/public-apis
-	url = https://github.com/public-apis/public-apis.git
 [submodule "vendor/hono"]
 	path = vendor/hono
 	url = https://github.com/honojs/hono.git
-[submodule "vendor/clerk-javascript"]
-	path = vendor/clerk-javascript
-	url = https://github.com/clerk/javascript.git
-[submodule "vendor/SimFoundry"]
-	path = vendor/SimFoundry
-	url = https://github.com/NVlabs/SimFoundry.git
 [submodule "vendor/camoufox"]
 	path = vendor/camoufox
 	url = https://github.com/daijro/camoufox.git
-[submodule "vendor/Agentic-Design-Patterns"]
-	path = vendor/Agentic-Design-Patterns
-	url = https://github.com/evoiz/Agentic-Design-Patterns.git
 [submodule "vendor/threeui"]
 	path = vendor/threeui
 	url = https://github.com/MengTo/threeui.git
@@ -82,30 +46,9 @@
 [submodule "vendor/llama.cpp"]
 	path = vendor/llama.cpp
 	url = https://github.com/ggml-org/llama.cpp.git
-[submodule "vendor/scrapegraph-ai"]
-	path = vendor/scrapegraph-ai
-	url = https://github.com/ScrapeGraphAI/Scrapegraph-ai.git
-[submodule "vendor/awesome-cad"]
-	path = vendor/awesome-cad
-	url = https://github.com/mlightcad/awesome-cad.git
 [submodule "vendor/mujoco"]
 	path = vendor/mujoco
 	url = https://github.com/google-deepmind/mujoco.git
-[submodule "vendor/llm.c"]
-	path = vendor/llm.c
-	url = https://github.com/karpathy/llm.c.git
-[submodule "vendor/mlc-llm"]
-	path = vendor/mlc-llm
-	url = https://github.com/mlc-ai/mlc-llm.git
-[submodule "vendor/agent-twitter-client"]
-	path = vendor/agent-twitter-client
-	url = https://github.com/the-convocation/twitter-scraper.git
-[submodule "vendor/social-media-agent"]
-	path = vendor/social-media-agent
-	url = https://github.com/langchain-ai/social-media-agent.git
-[submodule "vendor/awesome-robotics"]
-	path = vendor/awesome-robotics
-	url = https://github.com/mjyc/awesome-robotics-projects.git
 [submodule "vendor/kicad-footprints"]
 	path = vendor/kicad-footprints
 	url = https://github.com/KiCad/kicad-footprints.git
@@ -136,6 +79,46 @@
 [submodule "vendor/langgraph"]
 	path = vendor/langgraph
 	url = https://github.com/langchain-ai/langgraph.git
-[submodule "vendor/crewAI"]
-	path = vendor/crewAI
-	url = https://github.com/crewAIInc/crewAI.git
+[submodule "vendor/agency-agents"]
+	path = vendor/agency-agents
+	url = https://github.com/msitarzewski/agency-agents.git
+[submodule "vendor/paperdebugger"]
+	path = vendor/paperdebugger
+	url = https://github.com/PaperDebugger/paperdebugger.git
+[submodule "vendor/fable5-system-prompt"]
+	path = vendor/fable5-system-prompt
+	url = https://github.com/cyrus-tt/fable5-system-prompt.git
+[submodule "quantum/quantum_nodes"]
+	path = quantum/quantum_nodes
+	url = https://github.com/Quantum-Creative-Group/quantum_nodes.git
+[submodule "thermal/BVtkNodes"]
+	path = thermal/BVtkNodes
+	url = https://github.com/simboden/BVtkNodes.git
+[submodule "vendor/openclaw-paperbanana"]
+	path = vendor/openclaw-paperbanana
+	url = https://github.com/GoatInAHat/openclaw-paperbanana.git
+[submodule "vendor/papervizagent"]
+	path = vendor/papervizagent
+	url = https://github.com/GoatInAHat/PaperVizAgent.git
+[submodule "vendor/octree"]
+	path = vendor/octree
+	url = https://github.com/octree-labs/octree.git
+[submodule "vendor/papergym"]
+	path = vendor/papergym
+	url = https://github.com/zju-real/papergym.git
+[submodule "vendor/markitdown"]
+	path = vendor/markitdown
+	url = https://github.com/microsoft/markitdown.git
+[submodule "vendor/SciencePlots"]
+	path = vendor/SciencePlots
+	url = https://github.com/garrettj403/SciencePlots.git
+[submodule "vendor/OpenManus"]
+	path = vendor/OpenManus
+	url = https://github.com/OpenManus/OpenManus.git
+[submodule "pcb/stylized-blender-setup"]
+	path = pcb/stylized-blender-setup
+	url = https://github.com/PCB-Arts/stylized-blender-setup.git
+[submodule "pcb/protorack-kicad"]
+	path = pcb/protorack-kicad
+	url = https://github.com/30350n/protorack-kicad.git
+
