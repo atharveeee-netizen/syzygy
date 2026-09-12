@@ -1,0 +1,96 @@
+name: Release
+on:
+  release:
+    types: [published]
+jobs:
+  build_pcb2blender_exporter:
+    name: Build pcb2blender_exporter KiCad Addon
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          submodules: recursive
+      - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: pyproject.toml
+      - name: Install CI build dependencies
+        env:
+          UV_PROJECT_ENVIRONMENT: ${{ env.pythonLocation }}
+        run: uv sync --only-group ci
+      - name: Build KiCad Addon
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install requests
+          NAME="pcb2blender_exporter_$(sed "s/-b.*//;s/-/_/;s/\./-/g" <<< $GITHUB_REF_NAME).zip"
+          python .github/workflows/build_kicad_addon.py $GITHUB_REF_NAME \
+            --source pcb2blender_exporter \
+            --icon images/icon.png \
+            --extra-files images/blender_icon_32x32.png
+          sha256sum $NAME | cut -c -64 | tr -d "\n" > $NAME.sha256
+          gh release upload $GITHUB_REF_NAME $NAME
+          gh release upload $GITHUB_REF_NAME $NAME.sha256
+          gh release upload $GITHUB_REF_NAME version.json
+      - name: Create Content Library Metadata Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: KiCad Content Library Metadata
+          path: metadata.json
+  build_pcb2blender_importer:
+    name: Build pcb2blender_importer Blender Extension
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        blender-version: ["4.5lts", "5.1"]
+    steps:
+      - name: Get Release Tag
+        id: get-release-tag
+        run: |
+          RELEASE_TAG="${GITHUB_REF_NAME%%-b*}-b${{ matrix.blender-version }}"
+          echo "release-tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.get-release-tag.outputs.release-tag }}
+          persist-credentials: false
+          submodules: recursive
+      - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: pyproject.toml
+      - name: Install CI build dependencies
+        env:
+          UV_PROJECT_ENVIRONMENT: ${{ env.pythonLocation }}
+        run: uv sync --only-group ci
+      - name: Update Extension Dependencies
+        run: python download_dependencies.py
+      - name: Set up Blender
+        run: |
+          sudo apt-get update && sudo apt-get install -y libegl1
+          python .github/workflows/download_blender.py ${{ matrix.blender-version }}
+      - name: Install Pytest in Blender
+        run: |
+          curl https://bootstrap.pypa.io/get-pip.py -s -O
+          BLENDER_VERSION=$(sed "s/[^0-9.]//g" <<< "${{ matrix.blender-version }}")
+          BLENDER_PYTHON_DIR="blender/$BLENDER_VERSION/python/bin"
+          BLENDER_PYTHON="$BLENDER_PYTHON_DIR/$(ls $BLENDER_PYTHON_DIR | sed "s/ .*//")"
+          $BLENDER_PYTHON get-pip.py
+          $BLENDER_PYTHON -m pip install pytest
+      - name: Build and Install Blender Extension
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ steps.get-release-tag.outputs.release-tag }}
+        run: |
+          NAME="pcb2blender_importer_$(sed "s/-k.*-/_/;s/\./-/g" <<< $RELEASE_TAG).zip"
+          echo "extension_file="
+          ./blender/blender --command extension build \
+            --source-dir pcb2blender_importer \
+            --output-filepath $NAME
+          ./blender/blender --command extension install-file $NAME -r user_default -e
+          sha256sum $NAME | cut -c -64 | tr -d "\n" > $NAME.sha256
+          gh release upload $GITHUB_REF_NAME $NAME
+          gh release upload $GITHUB_REF_NAME $NAME.sha256
+      - name: Run Tests
+        run: pytest --blender-executable ./blender/blender -v -k test_importer tests/

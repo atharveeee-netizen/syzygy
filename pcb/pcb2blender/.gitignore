@@ -1,0 +1,10 @@
+.vscode/
+
+.direnv/
+.venv/
+__pycache__/
+
+*.blend[1-9]
+*.prof
+
+wheels/
